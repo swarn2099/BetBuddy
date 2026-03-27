@@ -8,6 +8,14 @@ final class AuthService {
         try await client.auth.signInWithOTP(email: email, redirectTo: URL(string: "betbuddy://auth/callback"))
     }
 
+    func signInWithPassword(email: String, password: String) async throws {
+        try await client.auth.signIn(email: email, password: password)
+    }
+
+    func signUpWithPassword(email: String, password: String) async throws {
+        try await client.auth.signUp(email: email, password: password)
+    }
+
     func handleDeepLink(url: URL) async throws {
         try await client.auth.session(from: url)
     }

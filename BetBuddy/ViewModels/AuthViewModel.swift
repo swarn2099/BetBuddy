@@ -10,6 +10,14 @@ final class AuthViewModel {
     var email = ""
     var errorMessage: String?
     var isSendingLink = false
+    var testPassword = ""
+
+    static let testEmail = "swarn2099@gmail.com"
+    static let testPasswordValue = "testuser2026"
+
+    var isTestAccount: Bool {
+        email.lowercased() == Self.testEmail
+    }
 
     private let authService = AuthService()
     private let profileService = ProfileService()
@@ -42,6 +50,28 @@ final class AuthViewModel {
         errorMessage = nil
         do {
             try await authService.sendMagicLink(email: email)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isSendingLink = false
+    }
+
+    func signInTestAccount() async {
+        guard isTestAccount, testPassword == Self.testPasswordValue else {
+            errorMessage = "Incorrect password"
+            return
+        }
+        isSendingLink = true
+        errorMessage = nil
+        do {
+            // Try sign in first, if fails then sign up
+            do {
+                try await authService.signInWithPassword(email: email, password: testPassword)
+            } catch {
+                try await authService.signUpWithPassword(email: email, password: testPassword)
+                try await authService.signInWithPassword(email: email, password: testPassword)
+            }
+            await checkSession()
         } catch {
             errorMessage = error.localizedDescription
         }

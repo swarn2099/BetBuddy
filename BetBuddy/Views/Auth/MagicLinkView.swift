@@ -36,11 +36,28 @@ struct MagicLinkView: View {
                             .stroke(Color.borderPrimary, lineWidth: 1)
                     )
 
+                // Password field for test account
+                if authVM.isTestAccount {
+                    SecureField("Password", text: $authVM.testPassword)
+                        .textContentType(.password)
+                        .padding()
+                        .background(Color.bgInput)
+                        .clipShape(RoundedRectangle(cornerRadius: Spacing.inputRadius))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Spacing.inputRadius)
+                                .stroke(Color.borderPrimary, lineWidth: 1)
+                        )
+                }
+
                 Button {
                     Task {
-                        await authVM.sendMagicLink()
-                        if authVM.errorMessage == nil {
-                            showSentView = true
+                        if authVM.isTestAccount {
+                            await authVM.signInTestAccount()
+                        } else {
+                            await authVM.sendMagicLink()
+                            if authVM.errorMessage == nil {
+                                showSentView = true
+                            }
                         }
                     }
                 } label: {
@@ -49,7 +66,7 @@ struct MagicLinkView: View {
                             ProgressView()
                                 .tint(.white)
                         } else {
-                            Text("Continue")
+                            Text(authVM.isTestAccount ? "Sign In" : "Continue")
                                 .font(.button15)
                         }
                     }
@@ -65,7 +82,7 @@ struct MagicLinkView: View {
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
                 }
-                .disabled(authVM.isSendingLink || authVM.email.isEmpty)
+                .disabled(authVM.isSendingLink || authVM.email.isEmpty || (authVM.isTestAccount && authVM.testPassword.isEmpty))
 
                 if let error = authVM.errorMessage {
                     Text(error)
