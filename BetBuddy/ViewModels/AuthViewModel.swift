@@ -12,11 +12,11 @@ final class AuthViewModel {
     var isSendingLink = false
     var testPassword = ""
 
-    static let testEmail = "swarn2099@gmail.com"
+    static let testEmails: Set<String> = ["swarn2099@gmail.com", "sswarn2099@gmail.com"]
     static let testPasswordValue = "testuser2026"
 
     var isTestAccount: Bool {
-        email.lowercased() == Self.testEmail
+        Self.testEmails.contains(email.lowercased())
     }
 
     private let authService = AuthService()
