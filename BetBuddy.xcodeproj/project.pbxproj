@@ -46,6 +46,7 @@
 		A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCA89B33E63848442DC55B /* ColorTokens.swift */; };
 		AE461DBC2F29FCF6AE467FDE /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */; };
 		B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F502D27AC89B65707A4189 /* Spacing.swift */; };
+		C54CD04BCE2E89C9AF0BA249 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70ABD817DCC895804AC /* CelebrationView.swift */; };
 		C621A53F35AF1FC50913EFC9 /* BetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42424D0AABFC4C60E36B8864 /* BetDetailView.swift */; };
 		C80D9C305F36AB3966D830E6 /* GroupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36B5A3FA3BE1AF511E88EF1 /* GroupSettingsView.swift */; };
 		CC1D461D253AB578C4F41C16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8291D5BEB82D43C8FA0D7 /* Profile.swift */; };
@@ -84,6 +85,7 @@
 		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		75861D6E828757AD03E9A99D /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
 		760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
+		7E33A70ABD817DCC895804AC /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		8218555700996271CA39AAD3 /* OutcomeChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeChipView.swift; sourceTree = "<group>"; };
 		83134873542DC8D2304356BF /* MagicLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkView.swift; sourceTree = "<group>"; };
 		860638D85FD841B85DEE8418 /* View+GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassCard.swift"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			children = (
 				5CB2371F5DCDA668DEB72588 /* AvatarView.swift */,
 				8E23723ECBF777915A0F0905 /* BalanceView.swift */,
+				7E33A70ABD817DCC895804AC /* CelebrationView.swift */,
 				FE71F02A4E80159F970D12BA /* GlassCard.swift */,
 				DA9B2D231B4C295D56A666CB /* LoadingView.swift */,
 				8218555700996271CA39AAD3 /* OutcomeChipView.swift */,
@@ -395,6 +398,7 @@
 				DAC88C35EA9C1A79B8B1553F /* BetService.swift in Sources */,
 				4E7D66FFBAC1D2814C8CC7A9 /* BetViewModel.swift in Sources */,
 				67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */,
+				C54CD04BCE2E89C9AF0BA249 /* CelebrationView.swift in Sources */,
 				14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */,
 				A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */,
 				4A7C186859D95ABB1758D1CC /* CreateBetView.swift in Sources */,
@@ -455,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.betbuddys.app;
 				PRODUCT_NAME = BetBuddy;
 				SDKROOT = iphoneos;
@@ -537,7 +541,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.betbuddys.app;
 				PRODUCT_NAME = BetBuddy;
 				SDKROOT = iphoneos;

@@ -10,6 +10,7 @@ struct BetDetailView: View {
     @State private var showSettleConfirm = false
     @State private var settleOutcome = ""
     @State private var showDeleteConfirm = false
+    @State private var activeToast: ToastType?
 
     private var isCreator: Bool {
         betVM.bet?.creatorId == authVM.currentUser?.id
@@ -178,7 +179,10 @@ struct BetDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showPlaceBetSheet) {
             if let bet = betVM.bet {
-                PlaceBetSheet(bet: bet, betVM: betVM, authVM: authVM)
+                PlaceBetSheet(bet: bet, betVM: betVM, authVM: authVM, onSuccess: { side, amount in
+                    activeToast = .betPlaced(side: side, amount: amount)
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                })
                     .presentationDetents([.medium, .large])
             }
         }
@@ -197,7 +201,13 @@ struct BetDetailView: View {
         }
         .alert("Settle Bet", isPresented: $showSettleConfirm) {
             Button("Confirm", role: .destructive) {
-                Task { await betVM.settleBet(winner: settleOutcome) }
+                Task {
+                    await betVM.settleBet(winner: settleOutcome)
+                    if betVM.errorMessage == nil {
+                        activeToast = .betSettled
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    }
+                }
             }
             Button("Cancel", role: .cancel) {}
         } message: {
@@ -218,6 +228,7 @@ struct BetDetailView: View {
         .task {
             await betVM.loadBet(betId: betId)
         }
+        .toast($activeToast)
     }
 
     private func statItem(label: String, value: String, color: Color) -> some View {
@@ -314,6 +325,7 @@ struct PlaceBetSheet: View {
     let bet: Bet
     @Bindable var betVM: BetViewModel
     let authVM: AuthViewModel
+    var onSuccess: ((String, Int) -> Void)?
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -404,9 +416,12 @@ struct PlaceBetSheet: View {
                             Task {
                                 await betVM.placeWager()
                                 if betVM.errorMessage == nil {
+                                    let side = betVM.selectedSide ?? ""
+                                    let amount = betVM.wagerAmount
                                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                     await authVM.refreshProfile()
                                     dismiss()
+                                    onSuccess?(side, amount)
                                 }
                             }
                         } label: {

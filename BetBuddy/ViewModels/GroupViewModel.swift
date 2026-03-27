@@ -15,13 +15,22 @@ final class GroupViewModel {
         get async { await authService.currentUserId }
     }
 
+    private static let lastGroupKey = "lastSelectedGroupId"
+
     func loadGroups() async {
         guard let userId = await authService.currentUserId else { return }
         isLoading = true
         do {
             groups = try await groupService.fetchUserGroups(userId: userId)
             if selectedGroup == nil {
-                selectedGroup = groups.first
+                // Restore last selected group
+                if let savedId = UserDefaults.standard.string(forKey: Self.lastGroupKey),
+                   let uuid = UUID(uuidString: savedId),
+                   let saved = groups.first(where: { $0.id == uuid }) {
+                    selectedGroup = saved
+                } else {
+                    selectedGroup = groups.first
+                }
             }
             if let selected = selectedGroup {
                 await loadMembers(groupId: selected.id)
@@ -141,6 +150,7 @@ final class GroupViewModel {
 
     func selectGroup(_ group: BetGroup) async {
         selectedGroup = group
+        UserDefaults.standard.set(group.id.uuidString, forKey: Self.lastGroupKey)
         await loadMembers(groupId: group.id)
     }
 }
