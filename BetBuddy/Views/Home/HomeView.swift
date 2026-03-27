@@ -40,11 +40,19 @@ struct HomeView: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink {
-                            LeaderboardView(groupId: group.id)
-                        } label: {
-                            Image(systemName: "trophy")
-                                .foregroundStyle(Color.accentWarning)
+                        HStack(spacing: 16) {
+                            NavigationLink {
+                                GroupSettingsView(group: group)
+                            } label: {
+                                Image(systemName: "gearshape")
+                                    .foregroundStyle(Color.textSecondary)
+                            }
+                            NavigationLink {
+                                LeaderboardView(groupId: group.id)
+                            } label: {
+                                Image(systemName: "trophy")
+                                    .foregroundStyle(Color.accentWarning)
+                            }
                         }
                     }
                 }

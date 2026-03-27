@@ -61,21 +61,29 @@ struct ProfileView: View {
                                 .padding(.horizontal, Spacing.screenH)
 
                             ForEach(groupVM.groups) { group in
-                                HStack(spacing: 12) {
-                                    AvatarView(name: group.name, size: 36, imageURL: group.imageUrl)
-                                    Text(group.name)
-                                        .font(.button15)
-                                        .foregroundStyle(Color.textPrimary)
-                                    Spacer()
-                                    if group.leaderId == user.id {
-                                        Text("Leader")
-                                            .font(.label11)
-                                            .foregroundStyle(Color.accentWarning)
-                                            .textCase(.uppercase)
+                                NavigationLink {
+                                    GroupSettingsView(group: group)
+                                } label: {
+                                    HStack(spacing: 12) {
+                                        AvatarView(name: group.name, size: 36, imageURL: group.imageUrl)
+                                        Text(group.name)
+                                            .font(.button15)
+                                            .foregroundStyle(Color.textPrimary)
+                                        Spacer()
+                                        if group.leaderId == user.id {
+                                            Text("Leader")
+                                                .font(.label11)
+                                                .foregroundStyle(Color.accentWarning)
+                                                .textCase(.uppercase)
+                                        }
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: 12, weight: .semibold))
+                                            .foregroundStyle(Color.textMuted)
                                     }
+                                    .padding(12)
+                                    .glassCard()
                                 }
-                                .padding(12)
-                                .glassCard()
+                                .buttonStyle(.plain)
                             }
                             .padding(.horizontal, Spacing.screenH)
                         }
