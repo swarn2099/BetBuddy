@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05EE06B257E9DE53FFDDE363 /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6470CA88BA91E13450BD1D6 /* GroupMember.swift */; };
+		06CC186D17A177CAF05195F4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B2D231B4C295D56A666CB /* LoadingView.swift */; };
+		0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A3FD9D3FF5E271E554F8D /* Bet.swift */; };
+		14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFD4526E71EE443458FBD48 /* Color+Hex.swift */; };
+		1A5F141BE3616ADA99E6A356 /* Wager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463BA047DB4E82ED9D7EFF8 /* Wager.swift */; };
+		24AAA60BD9F648E7C59D2F4D /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A78069D2F1B0B98F72AE08 /* Typography.swift */; };
+		48BCA57A1D32B3BF815F4BA2 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD151285629EE70A73DD0A40 /* Config.plist */; };
+		515C88C936A4F8761AB1D930 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262980C94341EE76AE3F6C4E /* Group.swift */; };
+		649BD1E12DE46AA60816742A /* View+GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860638D85FD841B85DEE8418 /* View+GlassCard.swift */; };
+		67A487B3A85FBEB7C464A130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */; };
+		6F7CFFB78B76598DE05FBC41 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD3AFB987D8BEF4E50CF34B /* Date+Formatting.swift */; };
+		7873E80DC3EE5B218AC9794C /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254F899C46C9662D3136E19B /* AppNotification.swift */; };
+		8937C7F7AD6AD6D3492F524A /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = A4DF8DEB096E1FEA251B9D6C /* Supabase */; };
+		8AB3065424E5D17713C4DDC9 /* BetBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E8BB3B6DB41E7E5AB9AA0 /* BetBuddyApp.swift */; };
+		8FEFAB6F3E98397CD9FA48F4 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */; };
+		90B38A2578532B1EEF34E4E7 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E23723ECBF777915A0F0905 /* BalanceView.swift */; };
+		9F7F53295FC3844FE062D083 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71F02A4E80159F970D12BA /* GlassCard.swift */; };
+		A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCA89B33E63848442DC55B /* ColorTokens.swift */; };
+		B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F502D27AC89B65707A4189 /* Spacing.swift */; };
+		CC1D461D253AB578C4F41C16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8291D5BEB82D43C8FA0D7 /* Profile.swift */; };
+		D55E7E3A46B9E75A8B175DFC /* OutcomeChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218555700996271CA39AAD3 /* OutcomeChipView.swift */; };
+		E848205DA4B37536587DB16F /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2371F5DCDA668DEB72588 /* AvatarView.swift */; };
+		ED233D483B8A17F22A8F8A7F /* StatusPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCB5859BDD3097FFCBC427 /* StatusPillView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2463BA047DB4E82ED9D7EFF8 /* Wager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wager.swift; sourceTree = "<group>"; };
+		254F899C46C9662D3136E19B /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
+		262980C94341EE76AE3F6C4E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		40D8291D5BEB82D43C8FA0D7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		5CB2371F5DCDA668DEB72588 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		8218555700996271CA39AAD3 /* OutcomeChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeChipView.swift; sourceTree = "<group>"; };
+		860638D85FD841B85DEE8418 /* View+GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassCard.swift"; sourceTree = "<group>"; };
+		8E23723ECBF777915A0F0905 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		9BFD4526E71EE443458FBD48 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		A53A3FD9D3FF5E271E554F8D /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
+		AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C2CCB5859BDD3097FFCBC427 /* StatusPillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPillView.swift; sourceTree = "<group>"; };
+		D6470CA88BA91E13450BD1D6 /* GroupMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
+		DA9B2D231B4C295D56A666CB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		DAD3AFB987D8BEF4E50CF34B /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
+		F4F502D27AC89B65707A4189 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		FC0E8BB3B6DB41E7E5AB9AA0 /* BetBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetBuddyApp.swift; sourceTree = "<group>"; };
+		FD151285629EE70A73DD0A40 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Config.plist; sourceTree = "<group>"; };
+		FE71F02A4E80159F970D12BA /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		FECCA89B33E63848442DC55B /* ColorTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTokens.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		467C83239574FAD99F6E5BCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8937C7F7AD6AD6D3492F524A /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18191A0CDB6A774E7537163C /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				FECCA89B33E63848442DC55B /* ColorTokens.swift */,
+				F4F502D27AC89B65707A4189 /* Spacing.swift */,
+				62A78069D2F1B0B98F72AE08 /* Typography.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		37FCCA9A308F421895AD8B2A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6BBBF8D1E0B7D6A4D15FCC1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04EA65C8E47119D5F9005140 /* BetBuddy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		78FF0AF0F6E37106BCA27F50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF629BFC70FB6F7364127909 /* Shared */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		89AFD8DF861D5D6B360A2B98 = {
+			isa = PBXGroup;
+			children = (
+				E55536B6842B1D257FEFDCB7 /* BetBuddy */,
+				6BBBF8D1E0B7D6A4D15FCC1B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C75ABAE77E592F969A6003DF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				254F899C46C9662D3136E19B /* AppNotification.swift */,
+				A53A3FD9D3FF5E271E554F8D /* Bet.swift */,
+				262980C94341EE76AE3F6C4E /* Group.swift */,
+				D6470CA88BA91E13450BD1D6 /* GroupMember.swift */,
+				40D8291D5BEB82D43C8FA0D7 /* Profile.swift */,
+				2463BA047DB4E82ED9D7EFF8 /* Wager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E55536B6842B1D257FEFDCB7 /* BetBuddy */ = {
+			isa = PBXGroup;
+			children = (
+				AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */,
+				FC0E8BB3B6DB41E7E5AB9AA0 /* BetBuddyApp.swift */,
+				FD151285629EE70A73DD0A40 /* Config.plist */,
+				EC50EA0A3DFFB81FB342BBFB /* Extensions */,
+				C75ABAE77E592F969A6003DF /* Models */,
+				37FCCA9A308F421895AD8B2A /* Services */,
+				18191A0CDB6A774E7537163C /* Theme */,
+				78FF0AF0F6E37106BCA27F50 /* Views */,
+			);
+			path = BetBuddy;
+			sourceTree = "<group>";
+		};
+		EC50EA0A3DFFB81FB342BBFB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9BFD4526E71EE443458FBD48 /* Color+Hex.swift */,
+				DAD3AFB987D8BEF4E50CF34B /* Date+Formatting.swift */,
+				860638D85FD841B85DEE8418 /* View+GlassCard.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EF629BFC70FB6F7364127909 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5CB2371F5DCDA668DEB72588 /* AvatarView.swift */,
+				8E23723ECBF777915A0F0905 /* BalanceView.swift */,
+				FE71F02A4E80159F970D12BA /* GlassCard.swift */,
+				DA9B2D231B4C295D56A666CB /* LoadingView.swift */,
+				8218555700996271CA39AAD3 /* OutcomeChipView.swift */,
+				C2CCB5859BDD3097FFCBC427 /* StatusPillView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		31DD76C5953CE00F39E453B1 /* BetBuddy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B726887B8869E07D60B814BA /* Build configuration list for PBXNativeTarget "BetBuddy" */;
+			buildPhases = (
+				4C2E8FB0E4D2C40414249EF6 /* Sources */,
+				1C81157F933EB7D1126EFE41 /* Resources */,
+				467C83239574FAD99F6E5BCB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BetBuddy;
+			packageProductDependencies = (
+				A4DF8DEB096E1FEA251B9D6C /* Supabase */,
+			);
+			productName = BetBuddy;
+			productReference = 04EA65C8E47119D5F9005140 /* BetBuddy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		593E7C69B1B186AEBB4A9308 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 76E08A9B30FC95851D7F431A /* Build configuration list for PBXProject "BetBuddy" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 89AFD8DF861D5D6B360A2B98;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D84EC66FEFF949D64A0B9571 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6BBBF8D1E0B7D6A4D15FCC1B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				31DD76C5953CE00F39E453B1 /* BetBuddy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1C81157F933EB7D1126EFE41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67A487B3A85FBEB7C464A130 /* Assets.xcassets in Resources */,
+				48BCA57A1D32B3BF815F4BA2 /* Config.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C2E8FB0E4D2C40414249EF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7873E80DC3EE5B218AC9794C /* AppNotification.swift in Sources */,
+				E848205DA4B37536587DB16F /* AvatarView.swift in Sources */,
+				90B38A2578532B1EEF34E4E7 /* BalanceView.swift in Sources */,
+				0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */,
+				8AB3065424E5D17713C4DDC9 /* BetBuddyApp.swift in Sources */,
+				14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */,
+				A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */,
+				6F7CFFB78B76598DE05FBC41 /* Date+Formatting.swift in Sources */,
+				9F7F53295FC3844FE062D083 /* GlassCard.swift in Sources */,
+				515C88C936A4F8761AB1D930 /* Group.swift in Sources */,
+				05EE06B257E9DE53FFDDE363 /* GroupMember.swift in Sources */,
+				06CC186D17A177CAF05195F4 /* LoadingView.swift in Sources */,
+				D55E7E3A46B9E75A8B175DFC /* OutcomeChipView.swift in Sources */,
+				CC1D461D253AB578C4F41C16 /* Profile.swift in Sources */,
+				B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */,
+				ED233D483B8A17F22A8F8A7F /* StatusPillView.swift in Sources */,
+				8FEFAB6F3E98397CD9FA48F4 /* SupabaseManager.swift in Sources */,
+				24AAA60BD9F648E7C59D2F4D /* Typography.swift in Sources */,
+				649BD1E12DE46AA60816742A /* View+GlassCard.swift in Sources */,
+				1A5F141BE3616ADA99E6A356 /* Wager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		010CABA9EE94F2BD27B44CC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.betbuddy.app;
+				PRODUCT_NAME = BetBuddy;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		093C2E27EA3C381EAC472500 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B9488EEFF1F750FFC8334757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.betbuddy.app;
+				PRODUCT_NAME = BetBuddy;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EBBCF6E63AD4CB696973A088 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		76E08A9B30FC95851D7F431A /* Build configuration list for PBXProject "BetBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBBCF6E63AD4CB696973A088 /* Debug */,
+				093C2E27EA3C381EAC472500 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B726887B8869E07D60B814BA /* Build configuration list for PBXNativeTarget "BetBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9488EEFF1F750FFC8334757 /* Debug */,
+				010CABA9EE94F2BD27B44CC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D84EC66FEFF949D64A0B9571 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A4DF8DEB096E1FEA251B9D6C /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D84EC66FEFF949D64A0B9571 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 593E7C69B1B186AEBB4A9308 /* Project object */;
+}
