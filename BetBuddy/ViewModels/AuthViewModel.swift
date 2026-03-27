@@ -111,6 +111,21 @@ final class AuthViewModel {
         email = ""
     }
 
+    func deleteAccount() async {
+        guard let userId = await authService.currentUserId else { return }
+        do {
+            // Delete profile (cascades to group_members, wagers via FK)
+            try await profileService.deleteProfile(userId: userId)
+            try? await authService.signOut()
+            isAuthenticated = false
+            isOnboarded = false
+            currentUser = nil
+            email = ""
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func startAuthListener() {
         Task {
             for await event in authService.authStateChanges() {

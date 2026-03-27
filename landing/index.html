@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BetBuddys — Fake Money Bets With Friends</title>
+  <meta name="description" content="Bet on literally anything with your friends. Who's late to dinner? Will it rain? Who wins the game? No real money. Just bragging rights.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06060A;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.07);
+      --text: #FAFAFA;
+      --text2: rgba(255,255,255,0.45);
+      --text3: rgba(255,255,255,0.18);
+      --accent: #6366F1;
+      --accent2: #8B5CF6;
+      --green: #22C55E;
+      --red: #EF4444;
+      --warning: #F59E0B;
+      --pink: #EC4899;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-glow {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(99,102,241,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(139,92,246,0.06) 0%, transparent 50%),
+                  radial-gradient(circle at 50% 80%, rgba(236,72,153,0.04) 0%, transparent 50%);
+      animation: glowMove 20s ease-in-out infinite alternate;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes glowMove {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-5%, -5%) rotate(3deg); }
+    }
+
+    /* Fade in animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(6,6,10,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      padding: 10px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99,102,241,0.3);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 20px 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 32px;
+    }
+
+    .hero-badge .pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--text2);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      padding: 16px 36px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(99,102,241,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      color: var(--text);
+      padding: 16px 36px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    /* Floating emojis */
+    .floating-emojis {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-emoji {
+      position: absolute;
+      font-size: 40px;
+      animation: floatEmoji 15s ease-in-out infinite;
+      opacity: 0.15;
+    }
+
+    @keyframes floatEmoji {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(10deg); }
+      66% { transform: translateY(20px) rotate(-5deg); }
+    }
+
+    /* Bets section */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 20px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--text2);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Bet examples */
+    .bet-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .bet-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .bet-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99,102,241,0.3);
+      box-shadow: 0 20px 60px rgba(99,102,241,0.1);
+    }
+
+    .bet-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .bet-emoji {
+      font-size: 32px;
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bet-title {
+      font-size: 16px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .bet-status {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      background: rgba(34,197,94,0.15);
+      color: var(--green);
+    }
+
+    .bet-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .bet-pool {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* Screenshots */
+    .screenshots {
+      padding: 100px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .screenshots-scroll {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      padding: 40px 20px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screenshots-scroll::-webkit-scrollbar { display: none; }
+
+    .screenshot-frame {
+      flex-shrink: 0;
+      width: 280px;
+      scroll-snap-align: center;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+    .screenshot-frame:hover {
+      transform: scale(1.05);
+    }
+    .screenshot-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99,102,241,0.3);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* CTA section */
+    .cta-section {
+      text-align: center;
+      padding: 120px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card {
+      max-width: 700px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1));
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 32px;
+      padding: 64px 40px;
+    }
+
+    .cta-card h2 {
+      font-size: 40px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .cta-card p {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 32px;
+    }
+
+    .balance-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green);
+      font-family: 'SF Mono', monospace;
+      margin-top: 24px;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-size: 14px;
+      color: var(--text3);
+    }
+
+    footer a {
+      color: var(--text2);
+      text-decoration: none;
+      margin: 0 12px;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 120px 20px 60px; }
+      .hero h1 { letter-spacing: -1px; }
+      .bet-examples { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .screenshot-frame { width: 240px; }
+      .cta-card { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- Floating emojis -->
+<div class="floating-emojis">
+  <span class="floating-emoji" style="top:10%;left:5%;animation-delay:0s;">🎲</span>
+  <span class="floating-emoji" style="top:20%;right:8%;animation-delay:2s;">🏀</span>
+  <span class="floating-emoji" style="top:40%;left:3%;animation-delay:4s;">🌮</span>
+  <span class="floating-emoji" style="top:60%;right:5%;animation-delay:6s;">🍕</span>
+  <span class="floating-emoji" style="top:75%;left:8%;animation-delay:8s;">💰</span>
+  <span class="floating-emoji" style="top:85%;right:10%;animation-delay:10s;">🎯</span>
+  <span class="floating-emoji" style="top:50%;left:90%;animation-delay:3s;">🌧️</span>
+  <span class="floating-emoji" style="top:30%;left:50%;animation-delay:7s;">😂</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🎲</div>
+    BetBuddys
+  </div>
+  <a href="#download" class="nav-cta">Download App</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="fade-up">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      No real money. Ever.
+    </div>
+  </div>
+
+  <h1 class="fade-up fade-up-delay-1">
+    Bet on<br><span class="gradient-text">literally anything</span><br>with your friends
+  </h1>
+
+  <p class="fade-up fade-up-delay-2">
+    Who's showing up late? Will it rain tomorrow? Is that restaurant actually good?
+    Put your fake money where your mouth is. $1,000 starting balance. Zero real stakes.
+    <strong>Maximum bragging rights.</strong>
+  </p>
+
+  <div class="hero-ctas fade-up fade-up-delay-3">
+    <a href="#download" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download for iOS
+    </a>
+    <a href="#bets" class="btn-secondary">See how it works ↓</a>
+  </div>
+</section>
+
+<!-- Bet examples -->
+<section id="bets">
+  <div class="section-header fade-up">
+    <div class="section-label">Real bets people make</div>
+    <h2>Bet on the dumbest stuff</h2>
+    <p>If you can argue about it, you can bet on it</p>
+  </div>
+
+  <div class="bet-examples">
+    <div class="bet-card fade-up fade-up-delay-1">
+      <div class="bet-card-header">
+        <div class="bet-emoji">🏀</div>
+        <div class="bet-title">Who wins tonight?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(52,199,89,0.12);color:#34C759;"><span class="chip-dot" style="background:#34C759;"></span>Lakers</span>
+        <span class="chip" style="background:rgba(255,59,48,0.12);color:#FF3B30;"><span class="chip-dot" style="background:#FF3B30;"></span>Celtics</span>
+      </div>
+      <div class="bet-pool">$350 pool</div>
+    </div>
+
+    <div class="bet-card fade-up fade-up-delay-2">
+      <div class="bet-card-header">
+        <div class="bet-emoji">⏰</div>
+        <div class="bet-title">Who shows up late to dinner?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(0,122,255,0.12);color:#007AFF;"><span class="chip-dot" style="background:#007AFF;"></span>Mike</span>
+        <span class="chip" style="background:rgba(255,159,10,0.12);color:#FF9F0A;"><span class="chip-dot" style="background:#FF9F0A;"></span>Sarah</span>
+        <span class="chip" style="background:rgba(175,82,222,0.12);color:#AF52DE;"><span class="chip-dot" style="background:#AF52DE;"></span>Nobody</span>
+      </div>
+      <div class="bet-pool">$180 pool</div>
+    </div>
+
+    <div class="bet-card fade-up fade-up-delay-3">
+      <div class="bet-card-header">
+        <div class="bet-emoji">🌧️</div>
+        <div class="bet-title">Will it rain tomorrow?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(52,199,89,0.12);color:#34C759;"><span class="chip-dot" style="background:#34C759;"></span>Yes</span>
+        <span class="chip" style="background:rgba(255,59,48,0.12);color:#FF3B30;"><span class="chip-dot" style="background:#FF3B30;"></span>No</span>
+      </div>
+      <div class="bet-pool">$420 pool</div>
+    </div>
+
+    <div class="bet-card fade-up fade-up-delay-1">
+      <div class="bet-card-header">
+        <div class="bet-emoji">🌮</div>
+        <div class="bet-title">Best taco spot downtown?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(52,199,89,0.12);color:#34C759;"><span class="chip-dot" style="background:#34C759;"></span>El Pastor</span>
+        <span class="chip" style="background:rgba(255,59,48,0.12);color:#FF3B30;"><span class="chip-dot" style="background:#FF3B30;"></span>Taqueria</span>
+      </div>
+      <div class="bet-pool">$275 pool</div>
+    </div>
+
+    <div class="bet-card fade-up fade-up-delay-2">
+      <div class="bet-card-header">
+        <div class="bet-emoji">💪</div>
+        <div class="bet-title">Will Jake actually go to the gym this week?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(52,199,89,0.12);color:#34C759;"><span class="chip-dot" style="background:#34C759;"></span>Yes 💀</span>
+        <span class="chip" style="background:rgba(255,59,48,0.12);color:#FF3B30;"><span class="chip-dot" style="background:#FF3B30;"></span>No way</span>
+      </div>
+      <div class="bet-pool">$500 pool</div>
+    </div>
+
+    <div class="bet-card fade-up fade-up-delay-3">
+      <div class="bet-card-header">
+        <div class="bet-emoji">🎬</div>
+        <div class="bet-title">Movie night pick — who's picking the worst one?</div>
+        <div class="bet-status">Live</div>
+      </div>
+      <div class="bet-chips">
+        <span class="chip" style="background:rgba(0,122,255,0.12);color:#007AFF;"><span class="chip-dot" style="background:#007AFF;"></span>Alex</span>
+        <span class="chip" style="background:rgba(255,159,10,0.12);color:#FF9F0A;"><span class="chip-dot" style="background:#FF9F0A;"></span>Priya</span>
+        <span class="chip" style="background:rgba(175,82,222,0.12);color:#AF52DE;"><span class="chip-dot" style="background:#AF52DE;"></span>Mike</span>
+      </div>
+      <div class="bet-pool">$150 pool</div>
+    </div>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section class="screenshots">
+  <div class="section-header fade-up">
+    <div class="section-label">The app</div>
+    <h2>Clean. Fast. Fun.</h2>
+    <p>Built for making bets in seconds, not minutes</p>
+  </div>
+
+  <div class="screenshots-scroll">
+    <div style="min-width:20px;"></div>
+    <div class="screenshot-frame"><img src="ios-1.png" alt="Home feed" loading="lazy"></div>
+    <div class="screenshot-frame"><img src="ios-2.png" alt="Bet detail" loading="lazy"></div>
+    <div class="screenshot-frame"><img src="ios-3.png" alt="Create bet" loading="lazy"></div>
+    <div class="screenshot-frame"><img src="ios-4.png" alt="Leaderboard" loading="lazy"></div>
+    <div class="screenshot-frame"><img src="ios-5.png" alt="Profile" loading="lazy"></div>
+    <div style="min-width:20px;"></div>
+  </div>
+</section>
+
+<!-- Features -->
+<section>
+  <div class="section-header fade-up">
+    <div class="section-label">Features</div>
+    <h2>Everything you need to settle arguments</h2>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card fade-up fade-up-delay-1">
+      <div class="feature-icon">👥</div>
+      <h3>Private Groups</h3>
+      <p>Create a group, share the 6-digit code, and start betting with your crew. Keep it between friends.</p>
+    </div>
+    <div class="feature-card fade-up fade-up-delay-2">
+      <div class="feature-icon">🎲</div>
+      <h3>Bet on Anything</h3>
+      <p>2 to 8 outcomes per bet. Add a deadline or leave it open-ended. Your bet, your rules.</p>
+    </div>
+    <div class="feature-card fade-up fade-up-delay-3">
+      <div class="feature-icon">💰</div>
+      <h3>Fake Money, Real Fun</h3>
+      <p>Everyone starts with $1,000. Win big or go broke — no real money involved. Just bragging rights.</p>
+    </div>
+    <div class="feature-card fade-up fade-up-delay-1">
+      <div class="feature-icon">🏆</div>
+      <h3>Leaderboard</h3>
+      <p>See who's the best bettor in your group. Climb the ranks. Talk trash. That's the whole point.</p>
+    </div>
+    <div class="feature-card fade-up fade-up-delay-2">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Settlement</h3>
+      <p>Bet creator picks the winner. Payouts calculated automatically. No arguments (about the math, at least).</p>
+    </div>
+    <div class="feature-card fade-up fade-up-delay-3">
+      <div class="feature-icon">🔔</div>
+      <h3>Push Notifications</h3>
+      <p>Get notified when friends create bets, place wagers, or when a bet is settled. Never miss the action.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <div class="cta-card fade-up">
+    <h2>Stop arguing.<br>Start betting.</h2>
+    <p>Download BetBuddys and settle every debate with your friends — for fake money.</p>
+    <a href="https://apps.apple.com/app/betbuddys" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download for iOS
+    </a>
+    <div class="balance-badge">💰 $1,000 free starting balance</div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p style="margin-bottom:12px;">
+    <a href="https://swarn2099.github.io/BetBuddy/privacy-policy.html">Privacy</a>
+    <a href="mailto:swarn2099@gmail.com">Contact</a>
+  </p>
+  <p>&copy; 2026 BetBuddys. No real money. Just vibes.</p>
+</footer>
+
+<!-- Scroll animation observer -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

@@ -68,4 +68,12 @@ final class ProfileService {
             .eq("id", value: userId.uuidString)
             .execute()
     }
+
+    func deleteProfile(userId: UUID) async throws {
+        try await client
+            .from("profiles")
+            .delete()
+            .eq("id", value: userId.uuidString)
+            .execute()
+    }
 }

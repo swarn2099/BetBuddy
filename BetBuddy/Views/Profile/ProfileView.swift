@@ -4,6 +4,8 @@ struct ProfileView: View {
     @Environment(AuthViewModel.self) private var authVM
     @Environment(GroupViewModel.self) private var groupVM
     @State private var showSignOutAlert = false
+    @State private var showDeleteAccountAlert = false
+    @State private var isDeletingAccount = false
 
     var body: some View {
         NavigationStack {
@@ -99,6 +101,24 @@ struct ProfileView: View {
                                 .foregroundStyle(Color.accentDanger)
                         }
                         .padding(.horizontal, Spacing.screenH)
+
+                        // Delete account
+                        Button(role: .destructive) {
+                            showDeleteAccountAlert = true
+                        } label: {
+                            Group {
+                                if isDeletingAccount {
+                                    ProgressView().controlSize(.small).tint(Color.accentDanger)
+                                } else {
+                                    Label("Delete Account", systemImage: "trash")
+                                        .font(.cardMeta)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .foregroundStyle(Color.textMuted)
+                        }
+                        .padding(.horizontal, Spacing.screenH)
                         .padding(.bottom, 40)
                     }
                 } else {
@@ -115,6 +135,18 @@ struct ProfileView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("Are you sure you want to sign out?")
+            }
+            .alert("Delete Account", isPresented: $showDeleteAccountAlert) {
+                Button("Delete Permanently", role: .destructive) {
+                    Task {
+                        isDeletingAccount = true
+                        await authVM.deleteAccount()
+                        isDeletingAccount = false
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will permanently delete your account, profile, and all associated data. This action cannot be undone.")
             }
         }
     }
