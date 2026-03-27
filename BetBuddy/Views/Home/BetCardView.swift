@@ -2,23 +2,35 @@ import SwiftUI
 
 struct BetCardView: View {
     let bet: Bet
+    let participantProfiles: [Profile]
+
+    init(bet: Bet, participantProfiles: [Profile] = []) {
+        self.bet = bet
+        self.participantProfiles = participantProfiles
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 14) {
             // Row 1: Emoji + Title + Status
-            HStack(spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
                 Text(bet.emoji)
                     .font(.system(size: 28))
                     .frame(width: 44, height: 44)
                     .background(Color.bgEmoji)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(bet.title)
                         .font(.cardTitle)
                         .foregroundStyle(Color.textPrimary)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
+
+                    if let deadline = bet.deadline {
+                        Text(deadline.betDeadlineText)
+                            .font(.cardMeta)
+                            .foregroundStyle(Color.textSecondary)
+                    }
                 }
 
                 Spacer()
@@ -26,52 +38,78 @@ struct BetCardView: View {
                 StatusPillView(status: bet.status, deadline: bet.deadline)
             }
 
-            // Row 2: Outcome bars with results
-            VStack(spacing: 6) {
+            // Row 2: Outcome chips (compact, wrapping)
+            FlowLayout(spacing: 6) {
                 ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
                     let chipColor = OutcomeColor.forIndex(index).color
                     let isWinner = bet.winner == outcome
 
-                    HStack(spacing: 8) {
+                    HStack(spacing: 4) {
                         Circle()
                             .fill(chipColor)
-                            .frame(width: 8, height: 8)
+                            .frame(width: 7, height: 7)
                         Text(outcome)
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(Color.textPrimary)
                             .lineLimit(1)
                         if isWinner {
                             Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 12))
+                                .font(.system(size: 10))
                                 .foregroundStyle(Color.accentSuccess)
                         }
-                        Spacer()
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 5)
                     .background(
-                        isWinner ? Color.accentSuccess.opacity(0.1) : chipColor.opacity(0.08)
+                        isWinner ? Color.accentSuccess.opacity(0.12) : chipColor.opacity(0.1)
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(Capsule())
                     .overlay(
                         isWinner ?
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.accentSuccess.opacity(0.3), lineWidth: 1) : nil
+                        Capsule().stroke(Color.accentSuccess.opacity(0.3), lineWidth: 1) : nil
                     )
                 }
             }
 
-            // Row 3: Pool + deadline
-            HStack {
-                BalanceView(amount: bet.pool, font: .poolAmount)
-                Text("pool")
-                    .font(.cardMeta)
-                    .foregroundStyle(Color.textSecondary)
-                Spacer()
-                if let deadline = bet.deadline {
-                    Text(deadline.betDeadlineText)
+            // Row 3: Pool + participant avatars
+            HStack(spacing: 0) {
+                // Pool amount in green
+                HStack(spacing: 4) {
+                    Image(systemName: "dollarsign.circle.fill")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color.accentSuccess)
+                    Text("$\(bet.pool)")
+                        .font(.system(size: 15, weight: .bold, design: .monospaced))
+                        .foregroundStyle(Color.accentSuccess)
+                    Text("pool")
                         .font(.cardMeta)
                         .foregroundStyle(Color.textSecondary)
+                }
+
+                Spacer()
+
+                // Stacked participant avatars
+                if !participantProfiles.isEmpty {
+                    HStack(spacing: -8) {
+                        ForEach(Array(participantProfiles.prefix(5).enumerated()), id: \.element.id) { index, profile in
+                            AvatarView(name: profile.username, size: 24, imageURL: profile.avatarUrl)
+                                .overlay(
+                                    Circle().stroke(Color.bgCard, lineWidth: 2)
+                                )
+                                .zIndex(Double(5 - index))
+                        }
+                        if participantProfiles.count > 5 {
+                            Text("+\(participantProfiles.count - 5)")
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(Color.textSecondary)
+                                .frame(width: 24, height: 24)
+                                .background(Color.bgSurface)
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(Color.bgCard, lineWidth: 2)
+                                )
+                        }
+                    }
                 }
             }
         }

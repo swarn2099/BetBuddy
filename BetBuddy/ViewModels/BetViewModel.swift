@@ -15,6 +15,7 @@ final class BetViewModel {
     private let betService = BetService()
     private let profileService = ProfileService()
     private let authService = AuthService()
+    private let notificationService = NotificationService()
 
     var currentUserId: UUID? {
         get async { await authService.currentUserId }
@@ -63,6 +64,16 @@ final class BetViewModel {
         errorMessage = nil
         do {
             try await betService.placeWager(betId: bet.id, userId: userId, amount: wagerAmount, side: side)
+            // Notify bet creator
+            if bet.creatorId != userId {
+                await notificationService.sendPushNotification(
+                    type: "wager_placed",
+                    userIds: [bet.creatorId.uuidString],
+                    title: bet.title,
+                    body: "Someone bet $\(wagerAmount) on \"\(side)\"",
+                    metadata: ["bet_id": bet.id.uuidString]
+                )
+            }
             await loadBet(betId: bet.id)
             selectedSide = nil
             wagerAmount = 0
@@ -79,6 +90,18 @@ final class BetViewModel {
         errorMessage = nil
         do {
             try await betService.settleBet(betId: bet.id, userId: userId, winner: winner)
+            // Notify all participants
+            let participantIds = wagers.map(\.userId).filter { $0 != userId }
+            let uniqueIds = Array(Set(participantIds)).map(\.uuidString)
+            if !uniqueIds.isEmpty {
+                await notificationService.sendPushNotification(
+                    type: "bet_settled",
+                    userIds: uniqueIds,
+                    title: "Bet Settled!",
+                    body: "\"\(winner)\" won in \"\(bet.title)\"",
+                    metadata: ["bet_id": bet.id.uuidString, "winner": winner]
+                )
+            }
             await loadBet(betId: bet.id)
         } catch {
             errorMessage = error.localizedDescription

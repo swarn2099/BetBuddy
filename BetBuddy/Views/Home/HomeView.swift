@@ -144,7 +144,10 @@ struct HomeView: View {
                 } else {
                     ForEach(homeVM.bets) { bet in
                         NavigationLink(value: bet) {
-                            BetCardView(bet: bet)
+                            BetCardView(
+                                bet: bet,
+                                participantProfiles: homeVM.betParticipants[bet.id] ?? []
+                            )
                         }
                         .buttonStyle(.scale)
                     }

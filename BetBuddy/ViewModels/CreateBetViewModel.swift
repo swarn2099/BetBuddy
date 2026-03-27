@@ -15,6 +15,8 @@ final class CreateBetViewModel {
 
     private let betService = BetService()
     private let authService = AuthService()
+    private let notificationService = NotificationService()
+    private let groupService = GroupService()
 
     static let emojiOptions = ["🎲", "🌮", "🌧️", "⏰", "📚", "☕", "🏀", "🎬", "🎵", "🍕", "🚗", "💪", "🎯", "🤔", "😂"]
 
@@ -57,6 +59,20 @@ final class CreateBetViewModel {
             if let imgData = imageData {
                 _ = try? await betService.uploadBetImage(betId: bet.id, imageData: imgData)
             }
+            // Send notification to group members
+            do {
+                let members = try await groupService.fetchGroupMembers(groupId: groupId)
+                let otherUserIds = members.filter { $0.id != userId }.map { $0.id.uuidString }
+                if !otherUserIds.isEmpty {
+                    await notificationService.sendPushNotification(
+                        type: "bet_created",
+                        userIds: otherUserIds,
+                        title: "New Bet",
+                        body: "\(bet.emoji) \(bet.title)",
+                        metadata: ["bet_id": bet.id.uuidString, "group_id": groupId.uuidString]
+                    )
+                }
+            } catch { /* notification failure is non-fatal */ }
             isCreating = false
             return bet
         } catch {
