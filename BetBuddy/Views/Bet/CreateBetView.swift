@@ -7,6 +7,7 @@ struct CreateBetView: View {
     @State private var vm = CreateBetViewModel()
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var previewImage: Image?
+    @State private var createdBetId: UUID?
 
     var body: some View {
         NavigationStack {
@@ -201,8 +202,8 @@ struct CreateBetView: View {
                     // Create button
                     Button {
                         Task {
-                            if let _ = await vm.createBet() {
-                                dismiss()
+                            if let bet = await vm.createBet() {
+                                createdBetId = bet.id
                             }
                         }
                     } label: {
@@ -240,6 +241,15 @@ struct CreateBetView: View {
             }
             .onAppear {
                 vm.selectedGroupId = groupVM.selectedGroup?.id
+            }
+            .navigationDestination(item: $createdBetId) { betId in
+                BetDetailView(betId: betId)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { dismiss() }
+                                .foregroundStyle(Color.accentPrimary)
+                        }
+                    }
             }
             .onChange(of: selectedPhoto) { _, newItem in
                 Task {

@@ -26,13 +26,37 @@ struct BetCardView: View {
                 StatusPillView(status: bet.status, deadline: bet.deadline)
             }
 
-            // Row 2: Outcome chips
-            FlowLayout(spacing: 6) {
+            // Row 2: Outcome bars with results
+            VStack(spacing: 6) {
                 ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
-                    OutcomeChipView(
-                        outcome: outcome,
-                        index: index,
-                        isWinner: bet.winner == outcome
+                    let chipColor = OutcomeColor.forIndex(index).color
+                    let isWinner = bet.winner == outcome
+
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(chipColor)
+                            .frame(width: 8, height: 8)
+                        Text(outcome)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(Color.textPrimary)
+                            .lineLimit(1)
+                        if isWinner {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color.accentSuccess)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(
+                        isWinner ? Color.accentSuccess.opacity(0.1) : chipColor.opacity(0.08)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        isWinner ?
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.accentSuccess.opacity(0.3), lineWidth: 1) : nil
                     )
                 }
             }
