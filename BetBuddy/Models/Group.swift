@@ -1,6 +1,6 @@
 import Foundation
 
-struct Group: Codable, Identifiable {
+struct BetGroup: Codable, Identifiable {
     let id: UUID
     var name: String
     var imageUrl: String?

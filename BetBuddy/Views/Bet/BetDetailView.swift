@@ -1,0 +1,330 @@
+import SwiftUI
+
+struct BetDetailView: View {
+    let betId: UUID
+    @State private var betVM = BetViewModel()
+    @Environment(AuthViewModel.self) private var authVM
+    @Environment(\.dismiss) private var dismiss
+    @State private var showSettleConfirm = false
+    @State private var settleOutcome = ""
+    @State private var showDeleteConfirm = false
+
+    private var isCreator: Bool {
+        betVM.bet?.creatorId == authVM.currentUser?.id
+    }
+
+    var body: some View {
+        ScrollView {
+            if let bet = betVM.bet {
+                VStack(alignment: .leading, spacing: Spacing.sectionGap) {
+                    // Header
+                    VStack(spacing: 12) {
+                        Text(bet.emoji)
+                            .font(.system(size: 48))
+                        Text(bet.title)
+                            .font(.heading2)
+                            .foregroundStyle(Color.textPrimary)
+                            .multilineTextAlignment(.center)
+                        StatusPillView(status: bet.status, deadline: bet.deadline)
+                    }
+                    .frame(maxWidth: .infinity)
+
+                    // Stats row
+                    HStack {
+                        statItem(label: "POOL", value: "$\(bet.pool)", color: Color.accentPrimary)
+                        Spacer()
+                        statItem(label: "DEADLINE", value: bet.deadline?.betDeadlineText ?? "Open", color: Color.textSecondary)
+                        Spacer()
+                        statItem(label: "WAGERS", value: "\(betVM.wagers.count)", color: Color.accentWarning)
+                    }
+                    .padding()
+                    .glassCard()
+
+                    // Outcomes breakdown
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("OUTCOMES")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+
+                        ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
+                            outcomeRow(bet: bet, outcome: outcome, index: index)
+                        }
+                    }
+
+                    // Wagers list
+                    if !betVM.wagers.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("ALL WAGERS")
+                                .font(.label11)
+                                .foregroundStyle(Color.textLabel)
+                                .tracking(0.5)
+
+                            ForEach(betVM.wagers) { wager in
+                                wagerRow(wager: wager, bet: bet)
+                            }
+                        }
+                    }
+
+                    // Actions
+                    if bet.isActive {
+                        actionSection(bet: bet)
+                    }
+
+                    if let error = betVM.errorMessage {
+                        Text(error)
+                            .font(.cardMeta)
+                            .foregroundStyle(Color.accentDanger)
+                    }
+                }
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, Spacing.topPadding)
+                .padding(.bottom, 40)
+            } else if betVM.isLoading {
+                LoadingView()
+                    .frame(height: 300)
+            }
+        }
+        .background(Color.bgPrimary)
+        .navigationBarTitleDisplayMode(.inline)
+        .alert("Settle Bet", isPresented: $showSettleConfirm) {
+            Button("Confirm", role: .destructive) {
+                Task { await betVM.settleBet(winner: settleOutcome) }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Declare \"\(settleOutcome)\" as the winner? This cannot be undone.")
+        }
+        .alert("Delete Bet", isPresented: $showDeleteConfirm) {
+            Button("Delete", role: .destructive) {
+                Task {
+                    if await betVM.deleteBet() {
+                        dismiss()
+                    }
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Delete this bet and refund all wagers?")
+        }
+        .task {
+            await betVM.loadBet(betId: betId)
+        }
+    }
+
+    private func statItem(label: String, value: String, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(label)
+                .font(.label11)
+                .foregroundStyle(Color.textLabel)
+                .tracking(0.5)
+            Text(value)
+                .font(.statValue)
+                .foregroundStyle(color)
+        }
+    }
+
+    private func outcomeRow(bet: Bet, outcome: String, index: Int) -> some View {
+        let pool = betVM.poolForSide(outcome)
+        let pct = betVM.percentageForSide(outcome)
+        let isWinner = bet.winner == outcome
+        let chipColor = OutcomeColor.forIndex(index).color
+
+        return VStack(spacing: 8) {
+            HStack {
+                Circle()
+                    .fill(chipColor)
+                    .frame(width: 10, height: 10)
+                Text(outcome)
+                    .font(.button15)
+                    .foregroundStyle(Color.textPrimary)
+                if isWinner {
+                    Label("Winner!", systemImage: "checkmark.circle.fill")
+                        .font(.label11)
+                        .foregroundStyle(Color.accentSuccess)
+                }
+                Spacer()
+                Text("$\(pool)")
+                    .font(.poolAmount)
+                    .foregroundStyle(chipColor)
+                Text(String(format: "%.0f%%", pct))
+                    .font(.cardMeta)
+                    .foregroundStyle(Color.textSecondary)
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.bgSurface)
+                        .frame(height: 6)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(chipColor)
+                        .frame(width: geo.size.width * pct / 100, height: 6)
+                        .animation(.spring, value: pct)
+                }
+            }
+            .frame(height: 6)
+        }
+        .padding(12)
+        .glassCard()
+    }
+
+    private func wagerRow(wager: Wager, bet: Bet) -> some View {
+        let profile = betVM.wagerProfiles[wager.userId]
+        let outcomeIndex = bet.outcomes.firstIndex(of: wager.side) ?? 0
+
+        return HStack(spacing: 10) {
+            AvatarView(name: profile?.username ?? "?", size: 32, imageURL: profile?.avatarUrl)
+            Text(profile?.username ?? "...")
+                .font(.cardTitle)
+                .foregroundStyle(Color.textPrimary)
+            Spacer()
+            Text("$\(wager.amount)")
+                .font(.chipAmount)
+                .foregroundStyle(Color.textPrimary)
+            OutcomeChipView(outcome: wager.side, index: outcomeIndex)
+        }
+        .padding(10)
+        .glassCard()
+    }
+
+    @ViewBuilder
+    private func actionSection(bet: Bet) -> some View {
+        if !bet.isPastDeadline {
+            // Place wager
+            VStack(alignment: .leading, spacing: 12) {
+                Text("PLACE YOUR BET")
+                    .font(.label11)
+                    .foregroundStyle(Color.textLabel)
+                    .tracking(0.5)
+
+                // Outcome selector
+                FlowLayout(spacing: 8) {
+                    ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
+                        Button {
+                            betVM.selectedSide = outcome
+                        } label: {
+                            OutcomeChipView(outcome: outcome, index: index)
+                                .opacity(betVM.selectedSide == outcome ? 1 : 0.6)
+                                .overlay(
+                                    betVM.selectedSide == outcome ?
+                                    Capsule().stroke(OutcomeColor.forIndex(index).color, lineWidth: 2) : nil
+                                )
+                        }
+                    }
+                }
+
+                if betVM.selectedSide != nil {
+                    // Amount input
+                    HStack(spacing: 8) {
+                        ForEach([10, 25, 50, 100], id: \.self) { amount in
+                            Button {
+                                betVM.wagerAmount = amount
+                            } label: {
+                                Text("$\(amount)")
+                                    .font(.chipAmount)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .background(betVM.wagerAmount == amount ? Color.accentPrimary.opacity(0.2) : Color.bgSurface)
+                                    .foregroundStyle(betVM.wagerAmount == amount ? Color.accentPrimary : Color.textSecondary)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                        }
+                    }
+
+                    TextField("Custom amount", value: $betVM.wagerAmount, format: .number)
+                        .keyboardType(.numberPad)
+                        .font(.poolAmount)
+                        .padding()
+                        .background(Color.bgInput)
+                        .clipShape(RoundedRectangle(cornerRadius: Spacing.inputRadius))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Spacing.inputRadius)
+                                .stroke(Color.borderPrimary, lineWidth: 1)
+                        )
+
+                    if let balance = authVM.currentUser?.balance {
+                        Text("Balance: $\(balance)")
+                            .font(.cardMeta)
+                            .foregroundStyle(Color.textSecondary)
+                    }
+
+                    Button {
+                        Task { await betVM.placeWager() }
+                    } label: {
+                        Group {
+                            if betVM.isPlacingWager {
+                                ProgressView().tint(.white)
+                            } else {
+                                Text("Bet $\(betVM.wagerAmount) on \"\(betVM.selectedSide ?? "")\"")
+                                    .font(.button15)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(colors: [Color.accentPrimary, Color.accentViolet], startPoint: .leading, endPoint: .trailing)
+                        )
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
+                    }
+                    .disabled(betVM.wagerAmount <= 0 || betVM.isPlacingWager)
+                }
+            }
+        } else {
+            HStack {
+                Image(systemName: "lock.fill")
+                Text("Betting is closed — waiting for settlement")
+                    .font(.body15)
+            }
+            .foregroundStyle(Color.textSecondary)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .glassCard()
+        }
+
+        if isCreator {
+            VStack(spacing: 12) {
+                Text("SETTLE THIS BET")
+                    .font(.label11)
+                    .foregroundStyle(Color.textLabel)
+                    .tracking(0.5)
+
+                ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
+                    Button {
+                        settleOutcome = outcome
+                        showSettleConfirm = true
+                    } label: {
+                        HStack {
+                            Circle()
+                                .fill(OutcomeColor.forIndex(index).color)
+                                .frame(width: 10, height: 10)
+                            Text("\"\(outcome)\" Wins")
+                                .font(.button15)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(Color.bgSurface)
+                        .foregroundStyle(Color.textPrimary)
+                        .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Spacing.buttonRadius)
+                                .stroke(Color.borderPrimary, lineWidth: 1)
+                        )
+                    }
+                    .disabled(betVM.isSettling)
+                }
+
+                Button(role: .destructive) {
+                    showDeleteConfirm = true
+                } label: {
+                    Label("Delete Bet", systemImage: "trash")
+                        .font(.button15)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .foregroundStyle(Color.accentDanger)
+                }
+            }
+        }
+    }
+}

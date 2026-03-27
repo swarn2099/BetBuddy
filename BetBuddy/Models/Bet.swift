@@ -1,6 +1,6 @@
 import Foundation
 
-struct Bet: Codable, Identifiable {
+struct Bet: Codable, Identifiable, Hashable {
     let id: UUID
     let groupId: UUID
     let creatorId: UUID
