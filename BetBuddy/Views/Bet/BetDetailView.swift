@@ -41,8 +41,8 @@ struct BetDetailView: View {
                     .glassCard()
 
                     // Outcomes breakdown
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("OUTCOMES")
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("RESULTS")
                             .font(.label11)
                             .foregroundStyle(Color.textLabel)
                             .tracking(0.5)
@@ -124,51 +124,65 @@ struct BetDetailView: View {
         }
     }
 
+    // MARK: - Outcome row (bold, large, clear)
     private func outcomeRow(bet: Bet, outcome: String, index: Int) -> some View {
         let pool = betVM.poolForSide(outcome)
         let pct = betVM.percentageForSide(outcome)
         let isWinner = bet.winner == outcome
         let chipColor = OutcomeColor.forIndex(index).color
 
-        return VStack(spacing: 8) {
-            HStack {
+        return VStack(spacing: 10) {
+            HStack(alignment: .center) {
                 Circle()
                     .fill(chipColor)
-                    .frame(width: 10, height: 10)
+                    .frame(width: 14, height: 14)
                 Text(outcome)
-                    .font(.button15)
+                    .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(Color.textPrimary)
                 if isWinner {
-                    Label("Winner!", systemImage: "checkmark.circle.fill")
-                        .font(.label11)
-                        .foregroundStyle(Color.accentSuccess)
+                    Text("WINNER")
+                        .font(.system(size: 12, weight: .heavy))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.accentSuccess)
+                        .clipShape(Capsule())
                 }
                 Spacer()
-                Text("$\(pool)")
-                    .font(.poolAmount)
-                    .foregroundStyle(chipColor)
-                Text(String(format: "%.0f%%", pct))
-                    .font(.cardMeta)
-                    .foregroundStyle(Color.textSecondary)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("$\(pool)")
+                        .font(.system(size: 20, weight: .bold, design: .monospaced))
+                        .foregroundStyle(chipColor)
+                    Text(String(format: "%.0f%%", pct))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Color.textSecondary)
+                }
             }
 
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: 6)
                         .fill(Color.bgSurface)
-                        .frame(height: 6)
-                    RoundedRectangle(cornerRadius: 4)
+                        .frame(height: 10)
+                    RoundedRectangle(cornerRadius: 6)
                         .fill(chipColor)
-                        .frame(width: geo.size.width * pct / 100, height: 6)
+                        .frame(width: max(0, geo.size.width * pct / 100), height: 10)
                         .animation(.spring, value: pct)
                 }
             }
-            .frame(height: 6)
+            .frame(height: 10)
         }
-        .padding(12)
+        .padding(16)
+        .background(isWinner ? Color.accentSuccess.opacity(0.08) : Color.clear)
         .glassCard()
+        .overlay(
+            isWinner ?
+            RoundedRectangle(cornerRadius: Spacing.cardRadius)
+                .stroke(Color.accentSuccess, lineWidth: 2) : nil
+        )
     }
 
+    // MARK: - Wager row
     private func wagerRow(wager: Wager, bet: Bet) -> some View {
         let profile = betVM.wagerProfiles[wager.userId]
         let outcomeIndex = bet.outcomes.firstIndex(of: wager.side) ?? 0
@@ -180,61 +194,86 @@ struct BetDetailView: View {
                 .foregroundStyle(Color.textPrimary)
             Spacer()
             Text("$\(wager.amount)")
-                .font(.chipAmount)
+                .font(.system(size: 16, weight: .bold, design: .monospaced))
                 .foregroundStyle(Color.textPrimary)
             OutcomeChipView(outcome: wager.side, index: outcomeIndex)
         }
-        .padding(10)
+        .padding(12)
         .glassCard()
     }
 
+    // MARK: - Action section (big bold bet buttons)
     @ViewBuilder
     private func actionSection(bet: Bet) -> some View {
         if !bet.isPastDeadline {
-            // Place wager
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text("PLACE YOUR BET")
-                    .font(.label11)
+                    .font(.system(size: 13, weight: .heavy))
                     .foregroundStyle(Color.textLabel)
-                    .tracking(0.5)
+                    .tracking(1)
 
-                // Outcome selector
-                FlowLayout(spacing: 8) {
+                // Big outcome selector buttons
+                VStack(spacing: 10) {
                     ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
+                        let isSelected = betVM.selectedSide == outcome
+                        let chipColor = OutcomeColor.forIndex(index).color
+
                         Button {
-                            betVM.selectedSide = outcome
+                            withAnimation(.spring(duration: 0.2)) {
+                                betVM.selectedSide = outcome
+                            }
                         } label: {
-                            OutcomeChipView(outcome: outcome, index: index)
-                                .opacity(betVM.selectedSide == outcome ? 1 : 0.6)
-                                .overlay(
-                                    betVM.selectedSide == outcome ?
-                                    Capsule().stroke(OutcomeColor.forIndex(index).color, lineWidth: 2) : nil
-                                )
+                            HStack {
+                                Circle()
+                                    .fill(chipColor)
+                                    .frame(width: 16, height: 16)
+                                Text(outcome)
+                                    .font(.system(size: 18, weight: .bold))
+                                    .foregroundStyle(isSelected ? .white : Color.textPrimary)
+                                Spacer()
+                                if isSelected {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.system(size: 22))
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                            .padding(16)
+                            .background(isSelected ? chipColor : Color.bgSurface)
+                            .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Spacing.buttonRadius)
+                                    .stroke(isSelected ? chipColor : Color.borderPrimary, lineWidth: isSelected ? 2 : 1)
+                            )
                         }
+                        .buttonStyle(.scale)
                     }
                 }
 
                 if betVM.selectedSide != nil {
-                    // Amount input
+                    // Amount quick picks
                     HStack(spacing: 8) {
                         ForEach([10, 25, 50, 100], id: \.self) { amount in
                             Button {
                                 betVM.wagerAmount = amount
                             } label: {
                                 Text("$\(amount)")
-                                    .font(.chipAmount)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 8)
+                                    .font(.system(size: 15, weight: .bold, design: .monospaced))
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 12)
                                     .background(betVM.wagerAmount == amount ? Color.accentPrimary.opacity(0.2) : Color.bgSurface)
                                     .foregroundStyle(betVM.wagerAmount == amount ? Color.accentPrimary : Color.textSecondary)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(betVM.wagerAmount == amount ? Color.accentPrimary : Color.borderPrimary, lineWidth: 1)
+                                    )
                             }
                         }
                     }
 
                     TextField("Custom amount", value: $betVM.wagerAmount, format: .number)
                         .keyboardType(.numberPad)
-                        .font(.poolAmount)
+                        .font(.system(size: 18, weight: .bold, design: .monospaced))
                         .padding()
                         .background(Color.bgInput)
                         .clipShape(RoundedRectangle(cornerRadius: Spacing.inputRadius))
@@ -245,7 +284,7 @@ struct BetDetailView: View {
 
                     if let balance = authVM.currentUser?.balance {
                         Text("Balance: $\(balance)")
-                            .font(.cardMeta)
+                            .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(Color.textSecondary)
                     }
 
@@ -262,11 +301,11 @@ struct BetDetailView: View {
                                 ProgressView().tint(.white)
                             } else {
                                 Text("Bet $\(betVM.wagerAmount) on \"\(betVM.selectedSide ?? "")\"")
-                                    .font(.button15)
+                                    .font(.system(size: 17, weight: .bold))
                             }
                         }
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
+                        .padding(.vertical, 18)
                         .background(
                             LinearGradient(colors: [Color.accentPrimary, Color.accentViolet], startPoint: .leading, endPoint: .trailing)
                         )
@@ -279,21 +318,22 @@ struct BetDetailView: View {
         } else {
             HStack {
                 Image(systemName: "lock.fill")
+                    .font(.system(size: 18))
                 Text("Betting is closed — waiting for settlement")
-                    .font(.body15)
+                    .font(.system(size: 15, weight: .semibold))
             }
             .foregroundStyle(Color.textSecondary)
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(16)
             .glassCard()
         }
 
         if isCreator {
             VStack(spacing: 12) {
                 Text("SETTLE THIS BET")
-                    .font(.label11)
+                    .font(.system(size: 13, weight: .heavy))
                     .foregroundStyle(Color.textLabel)
-                    .tracking(0.5)
+                    .tracking(1)
 
                 ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
                     Button {
@@ -303,12 +343,12 @@ struct BetDetailView: View {
                         HStack {
                             Circle()
                                 .fill(OutcomeColor.forIndex(index).color)
-                                .frame(width: 10, height: 10)
+                                .frame(width: 14, height: 14)
                             Text("\"\(outcome)\" Wins")
-                                .font(.button15)
+                                .font(.system(size: 16, weight: .bold))
                         }
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
+                        .padding(.vertical, 16)
                         .background(Color.bgSurface)
                         .foregroundStyle(Color.textPrimary)
                         .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
@@ -324,7 +364,7 @@ struct BetDetailView: View {
                     showDeleteConfirm = true
                 } label: {
                     Label("Delete Bet", systemImage: "trash")
-                        .font(.button15)
+                        .font(.system(size: 15, weight: .bold))
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
                         .foregroundStyle(Color.accentDanger)

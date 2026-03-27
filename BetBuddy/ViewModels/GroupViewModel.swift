@@ -99,6 +99,18 @@ final class GroupViewModel {
         }
     }
 
+    func deleteGroup(groupId: UUID) async {
+        do {
+            try await groupService.deleteGroup(groupId: groupId)
+            groups.removeAll { $0.id == groupId }
+            if selectedGroup?.id == groupId {
+                selectedGroup = groups.first
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func selectGroup(_ group: BetGroup) async {
         selectedGroup = group
         await loadMembers(groupId: group.id)

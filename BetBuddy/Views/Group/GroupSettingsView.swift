@@ -7,6 +7,7 @@ struct GroupSettingsView: View {
     @State private var showRemoveAlert = false
     @State private var memberToRemove: Profile?
     @State private var showLeaveAlert = false
+    @State private var showDeleteGroupAlert = false
     @State private var currentUserId: UUID?
 
     private var isLeader: Bool {
@@ -86,6 +87,14 @@ struct GroupSettingsView: View {
                         Label("Leave Group", systemImage: "rectangle.portrait.and.arrow.right")
                     }
                 }
+
+                if isLeader {
+                    Button(role: .destructive) {
+                        showDeleteGroupAlert = true
+                    } label: {
+                        Label("Delete Group", systemImage: "trash")
+                    }
+                }
             }
         }
         .navigationTitle(group.name)
@@ -108,6 +117,17 @@ struct GroupSettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Are you sure you want to leave this group?")
+        }
+        .alert("Delete Group", isPresented: $showDeleteGroupAlert) {
+            Button("Delete", role: .destructive) {
+                Task {
+                    await groupVM.deleteGroup(groupId: group.id)
+                    dismiss()
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Permanently delete this group and all its bets? This cannot be undone.")
         }
         .task {
             currentUserId = await groupVM.currentUserId

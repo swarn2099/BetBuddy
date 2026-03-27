@@ -85,6 +85,14 @@ final class GroupService {
             .execute()
     }
 
+    func deleteGroup(groupId: UUID) async throws {
+        try await client
+            .from("groups")
+            .delete()
+            .eq("id", value: groupId.uuidString)
+            .execute()
+    }
+
     func removeMember(groupId: UUID, leaderId: UUID, targetId: UUID) async throws {
         try await client.rpc("remove_member", params: [
             "p_group_id": groupId.uuidString,
