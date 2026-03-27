@@ -46,7 +46,7 @@ final class ProfileService {
     }
 
     func uploadAvatar(userId: UUID, imageData: Data) async throws -> String {
-        let path = "\(userId.uuidString)/avatar.jpg"
+        let path = "\(userId.uuidString.lowercased())/avatar.jpg"
         try await client.storage.from("avatars").upload(
             path,
             data: imageData,

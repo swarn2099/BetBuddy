@@ -68,13 +68,12 @@ final class AuthViewModel {
             username: username
         )
 
+        currentUser = profile
+
         if let data = avatarData {
-            let avatarUrl = try await profileService.uploadAvatar(userId: userId, imageData: data)
-            var updated = profile
-            updated.avatarUrl = avatarUrl
-            currentUser = updated
-        } else {
-            currentUser = profile
+            if let avatarUrl = try? await profileService.uploadAvatar(userId: userId, imageData: data) {
+                currentUser?.avatarUrl = avatarUrl
+            }
         }
 
         isOnboarded = true

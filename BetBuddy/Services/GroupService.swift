@@ -94,7 +94,7 @@ final class GroupService {
     }
 
     func uploadGroupImage(groupId: UUID, imageData: Data) async throws -> String {
-        let path = "\(groupId.uuidString)/image.jpg"
+        let path = "\(groupId.uuidString.lowercased())/image.jpg"
         try await client.storage.from("group-images").upload(
             path,
             data: imageData,
