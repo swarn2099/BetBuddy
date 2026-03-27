@@ -6,6 +6,7 @@ struct Bet: Codable, Identifiable, Hashable {
     let creatorId: UUID
     var title: String
     var emoji: String
+    var imageUrl: String?
     var outcomes: [String]
     var deadline: Date?
     var pool: Int
@@ -16,6 +17,7 @@ struct Bet: Codable, Identifiable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case id, title, emoji, outcomes, deadline, pool, status, winner
+        case imageUrl = "image_url"
         case groupId = "group_id"
         case creatorId = "creator_id"
         case createdAt = "created_at"

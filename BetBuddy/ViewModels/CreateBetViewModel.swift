@@ -8,6 +8,7 @@ final class CreateBetViewModel {
     var outcomes = ["", ""]
     var hasDeadline = false
     var deadline = Date().addingTimeInterval(86400)
+    var imageData: Data?
     var isCreating = false
     var errorMessage: String?
 
@@ -51,6 +52,9 @@ final class CreateBetViewModel {
                 outcomes: validOutcomes,
                 deadline: hasDeadline ? deadline : nil
             )
+            if let imgData = imageData {
+                _ = try? await betService.uploadBetImage(betId: bet.id, imageData: imgData)
+            }
             isCreating = false
             return bet
         } catch {

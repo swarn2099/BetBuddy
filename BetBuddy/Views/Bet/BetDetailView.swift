@@ -14,20 +14,63 @@ struct BetDetailView: View {
     }
 
     var body: some View {
+        ScrollViewReader { scrollProxy in
         ScrollView {
             if let bet = betVM.bet {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
-                    // Header
-                    VStack(spacing: 12) {
-                        Text(bet.emoji)
-                            .font(.system(size: 48))
-                        Text(bet.title)
-                            .font(.heading2)
-                            .foregroundStyle(Color.textPrimary)
-                            .multilineTextAlignment(.center)
-                        StatusPillView(status: bet.status, deadline: bet.deadline)
+                    // Header with optional image
+                    ZStack {
+                        if let url = bet.imageUrl, let imageURL = URL(string: url) {
+                            AsyncImage(url: imageURL) { image in
+                                image.resizable().scaledToFill()
+                            } placeholder: {
+                                Color.bgSurface
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 180)
+                            .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Spacing.cardRadius)
+                                    .fill(.black.opacity(0.4))
+                            )
+                        }
+
+                        VStack(spacing: 12) {
+                            Text(bet.emoji)
+                                .font(.system(size: 48))
+                            Text(bet.title)
+                                .font(.heading2)
+                                .foregroundStyle(bet.imageUrl != nil ? .white : Color.textPrimary)
+                                .multilineTextAlignment(.center)
+                            StatusPillView(status: bet.status, deadline: bet.deadline)
+                        }
+                        .padding(.vertical, bet.imageUrl != nil ? 20 : 0)
                     }
                     .frame(maxWidth: .infinity)
+
+                    // CTA button if active
+                    if bet.isActive && !bet.isPastDeadline {
+                        Button {
+                            withAnimation {
+                                scrollProxy.scrollTo("placeBetSection", anchor: .top)
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 18))
+                                Text("Place a Bet")
+                                    .font(.system(size: 17, weight: .bold))
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                LinearGradient(colors: [Color.accentPrimary, Color.accentViolet], startPoint: .leading, endPoint: .trailing)
+                            )
+                            .foregroundStyle(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
+                        }
+                        .buttonStyle(.scale)
+                    }
 
                     // Stats row
                     HStack {
@@ -69,6 +112,7 @@ struct BetDetailView: View {
                     // Actions
                     if bet.isActive {
                         actionSection(bet: bet)
+                            .id("placeBetSection")
                     }
 
                     if let error = betVM.errorMessage {
@@ -85,6 +129,7 @@ struct BetDetailView: View {
                     .frame(height: 300)
             }
         }
+        } // ScrollViewReader
         .background(Color.bgPrimary)
         .navigationBarTitleDisplayMode(.inline)
         .alert("Settle Bet", isPresented: $showSettleConfirm) {

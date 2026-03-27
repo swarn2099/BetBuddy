@@ -96,4 +96,20 @@ final class BetService {
             "p_user_id": userId.uuidString
         ]).execute()
     }
+
+    func uploadBetImage(betId: UUID, imageData: Data) async throws -> String {
+        let path = "\(betId.uuidString.lowercased())/image.jpg"
+        try await client.storage.from("bet-images").upload(
+            path,
+            data: imageData,
+            options: FileOptions(contentType: "image/jpeg", upsert: true)
+        )
+        let publicURL = try client.storage.from("bet-images").getPublicURL(path: path)
+        try await client
+            .from("bets")
+            .update(["image_url": publicURL.absoluteString])
+            .eq("id", value: betId.uuidString)
+            .execute()
+        return publicURL.absoluteString
+    }
 }

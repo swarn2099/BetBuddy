@@ -85,6 +85,14 @@ final class GroupService {
             .execute()
     }
 
+    func updateGroupName(groupId: UUID, name: String) async throws {
+        try await client
+            .from("groups")
+            .update(["name": name])
+            .eq("id", value: groupId.uuidString)
+            .execute()
+    }
+
     func deleteGroup(groupId: UUID) async throws {
         try await client
             .from("groups")

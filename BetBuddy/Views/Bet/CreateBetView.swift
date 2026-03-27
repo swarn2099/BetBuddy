@@ -1,9 +1,12 @@
 import SwiftUI
+import PhotosUI
 
 struct CreateBetView: View {
     @Environment(GroupViewModel.self) private var groupVM
     @Environment(\.dismiss) private var dismiss
     @State private var vm = CreateBetViewModel()
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var previewImage: Image?
 
     var body: some View {
         NavigationStack {
@@ -23,6 +26,46 @@ struct CreateBetView: View {
                             }
                             .pickerStyle(.menu)
                             .tint(Color.accentPrimary)
+                        }
+                    }
+
+                    // Cover image picker
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("COVER IMAGE")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+                        PhotosPicker(selection: $selectedPhoto, matching: .images) {
+                            if let previewImage {
+                                previewImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 160)
+                                    .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                                    .overlay(alignment: .bottomTrailing) {
+                                        Image(systemName: "pencil.circle.fill")
+                                            .font(.system(size: 24))
+                                            .foregroundStyle(.white)
+                                            .padding(8)
+                                    }
+                            } else {
+                                HStack {
+                                    Image(systemName: "photo.on.rectangle.angled")
+                                        .font(.system(size: 20))
+                                    Text("Add a photo (optional)")
+                                        .font(.button15)
+                                }
+                                .foregroundStyle(Color.textSecondary)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 80)
+                                .background(Color.bgSurface)
+                                .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: Spacing.cardRadius)
+                                        .stroke(Color.borderPrimary, style: StrokeStyle(lineWidth: 1, dash: [6]))
+                                )
+                            }
                         }
                     }
 
@@ -181,6 +224,16 @@ struct CreateBetView: View {
             }
             .onAppear {
                 vm.selectedGroupId = groupVM.selectedGroup?.id
+            }
+            .onChange(of: selectedPhoto) { _, newItem in
+                Task {
+                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                        vm.imageData = data
+                        if let uiImage = UIImage(data: data) {
+                            previewImage = Image(uiImage: uiImage)
+                        }
+                    }
+                }
             }
         }
     }

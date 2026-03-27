@@ -111,6 +111,34 @@ final class GroupViewModel {
         }
     }
 
+    func updateGroupName(groupId: UUID, name: String) async {
+        do {
+            try await groupService.updateGroupName(groupId: groupId, name: name)
+            if let index = groups.firstIndex(where: { $0.id == groupId }) {
+                groups[index].name = name
+            }
+            if selectedGroup?.id == groupId {
+                selectedGroup?.name = name
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func updateGroupImage(groupId: UUID, imageData: Data) async {
+        do {
+            let url = try await groupService.uploadGroupImage(groupId: groupId, imageData: imageData)
+            if let index = groups.firstIndex(where: { $0.id == groupId }) {
+                groups[index].imageUrl = url
+            }
+            if selectedGroup?.id == groupId {
+                selectedGroup?.imageUrl = url
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     func selectGroup(_ group: BetGroup) async {
         selectedGroup = group
         await loadMembers(groupId: group.id)

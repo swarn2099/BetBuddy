@@ -6,36 +6,24 @@ struct LeaderboardView: View {
     @Environment(AuthViewModel.self) private var authVM
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Scope toggle
-            Picker("Scope", selection: $vm.scope) {
-                Text("Global").tag(LeaderboardViewModel.Scope.global)
-                Text("Group").tag(LeaderboardViewModel.Scope.group)
+        ScrollView {
+            LazyVStack(spacing: 8) {
+                ForEach(Array(vm.groupRankings.enumerated()), id: \.element.id) { index, profile in
+                    leaderboardRow(rank: index + 1, profile: profile)
+                }
             }
-            .pickerStyle(.segmented)
             .padding(.horizontal, Spacing.screenH)
-            .padding(.vertical, 12)
-
-            ScrollView {
-                LazyVStack(spacing: 8) {
-                    let rankings = vm.scope == .global ? vm.globalRankings : vm.groupRankings
-                    ForEach(Array(rankings.enumerated()), id: \.element.id) { index, profile in
-                        leaderboardRow(rank: index + 1, profile: profile)
-                    }
-                }
-                .padding(.horizontal, Spacing.screenH)
-            }
-            .overlay {
-                if vm.isLoading {
-                    LoadingView()
-                }
+            .padding(.top, Spacing.topPadding)
+        }
+        .overlay {
+            if vm.isLoading {
+                LoadingView()
             }
         }
         .background(Color.bgPrimary)
         .navigationTitle("Leaderboard")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await vm.loadGlobalRankings()
             await vm.loadGroupRankings(groupId: groupId)
         }
     }
@@ -43,7 +31,6 @@ struct LeaderboardView: View {
     private func leaderboardRow(rank: Int, profile: Profile) -> some View {
         let isCurrentUser = profile.id == authVM.currentUser?.id
         return HStack(spacing: 12) {
-            // Rank
             Group {
                 switch rank {
                 case 1: Text("🥇")

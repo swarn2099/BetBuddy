@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct GroupSettingsView: View {
     @Environment(GroupViewModel.self) private var groupVM
@@ -9,6 +10,10 @@ struct GroupSettingsView: View {
     @State private var showLeaveAlert = false
     @State private var showDeleteGroupAlert = false
     @State private var currentUserId: UUID?
+    @State private var editedName: String = ""
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var isSavingName = false
+    @State private var isSavingImage = false
 
     private var isLeader: Bool {
         currentUserId == group.leaderId
@@ -16,6 +21,60 @@ struct GroupSettingsView: View {
 
     var body: some View {
         List {
+            // Group image + name editing (leader only)
+            if isLeader {
+                Section {
+                    HStack {
+                        Spacer()
+                        PhotosPicker(selection: $selectedPhoto, matching: .images) {
+                            if let url = group.imageUrl, let imageURL = URL(string: url) {
+                                AsyncImage(url: imageURL) { image in
+                                    image.resizable().scaledToFill()
+                                } placeholder: {
+                                    groupImagePlaceholder
+                                }
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .overlay(alignment: .bottomTrailing) {
+                                    editBadge
+                                }
+                            } else {
+                                groupImagePlaceholder
+                                    .overlay(alignment: .bottomTrailing) {
+                                        editBadge
+                                    }
+                            }
+                        }
+                        Spacer()
+                    }
+                    .listRowBackground(Color.clear)
+
+                    HStack {
+                        TextField("Group name", text: $editedName)
+                            .font(.button15)
+                        if editedName != group.name && !editedName.isEmpty {
+                            Button {
+                                Task {
+                                    isSavingName = true
+                                    await groupVM.updateGroupName(groupId: group.id, name: editedName)
+                                    isSavingName = false
+                                }
+                            } label: {
+                                if isSavingName {
+                                    ProgressView().controlSize(.small)
+                                } else {
+                                    Text("Save")
+                                        .font(.button15)
+                                        .foregroundStyle(Color.accentPrimary)
+                                }
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Group")
+                }
+            }
+
             // Invite Code Section
             Section {
                 VStack(spacing: 12) {
@@ -131,7 +190,35 @@ struct GroupSettingsView: View {
         }
         .task {
             currentUserId = await groupVM.currentUserId
+            editedName = group.name
             await groupVM.loadMembers(groupId: group.id)
         }
+        .onChange(of: selectedPhoto) { _, newItem in
+            Task {
+                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                    isSavingImage = true
+                    await groupVM.updateGroupImage(groupId: group.id, imageData: data)
+                    isSavingImage = false
+                }
+            }
+        }
+    }
+
+    private var groupImagePlaceholder: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .fill(Color.bgSurface)
+            .frame(width: 80, height: 80)
+            .overlay(
+                Image(systemName: "photo")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Color.textSecondary)
+            )
+    }
+
+    private var editBadge: some View {
+        Image(systemName: "pencil.circle.fill")
+            .font(.system(size: 20))
+            .foregroundStyle(Color.accentPrimary)
+            .background(Circle().fill(Color.bgPrimary).padding(-2))
     }
 }
