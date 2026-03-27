@@ -64,13 +64,7 @@ final class AuthViewModel {
         isSendingLink = true
         errorMessage = nil
         do {
-            // Try sign in first, if fails then sign up
-            do {
-                try await authService.signInWithPassword(email: email, password: testPassword)
-            } catch {
-                try await authService.signUpWithPassword(email: email, password: testPassword)
-                try await authService.signInWithPassword(email: email, password: testPassword)
-            }
+            try await authService.signInWithPassword(email: email, password: testPassword)
             await checkSession()
         } catch {
             errorMessage = error.localizedDescription
