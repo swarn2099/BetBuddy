@@ -3,6 +3,7 @@ import SwiftUI
 struct MagicLinkView: View {
     @Environment(AuthViewModel.self) private var authVM
     @State private var showSentView = false
+    @State private var showPassword = false
 
     var body: some View {
         @Bindable var authVM = authVM
@@ -35,9 +36,11 @@ struct MagicLinkView: View {
                         RoundedRectangle(cornerRadius: Spacing.inputRadius)
                             .stroke(Color.borderPrimary, lineWidth: 1)
                     )
+                    .onChange(of: authVM.email) { _, newValue in
+                        showPassword = newValue.lowercased() == AuthViewModel.testEmail
+                    }
 
-                // Password field for test account
-                if authVM.isTestAccount {
+                if showPassword {
                     SecureField("Password", text: $authVM.testPassword)
                         .textContentType(.password)
                         .padding()
@@ -51,7 +54,7 @@ struct MagicLinkView: View {
 
                 Button {
                     Task {
-                        if authVM.isTestAccount {
+                        if showPassword {
                             await authVM.signInTestAccount()
                         } else {
                             await authVM.sendMagicLink()
@@ -66,7 +69,7 @@ struct MagicLinkView: View {
                             ProgressView()
                                 .tint(.white)
                         } else {
-                            Text(authVM.isTestAccount ? "Sign In" : "Continue")
+                            Text(showPassword ? "Sign In" : "Continue")
                                 .font(.button15)
                         }
                     }
@@ -82,7 +85,7 @@ struct MagicLinkView: View {
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: Spacing.buttonRadius))
                 }
-                .disabled(authVM.isSendingLink || authVM.email.isEmpty || (authVM.isTestAccount && authVM.testPassword.isEmpty))
+                .disabled(authVM.isSendingLink || authVM.email.isEmpty || (showPassword && authVM.testPassword.isEmpty))
 
                 if let error = authVM.errorMessage {
                     Text(error)
