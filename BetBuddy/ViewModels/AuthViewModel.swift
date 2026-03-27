@@ -103,6 +103,13 @@ final class AuthViewModel {
         isOnboarded = true
     }
 
+    func refreshProfile() async {
+        guard let userId = await authService.currentUserId else { return }
+        if let profile = try? await profileService.fetchProfile(userId: userId) {
+            currentUser = profile
+        }
+    }
+
     func signOut() async {
         try? await authService.signOut()
         isAuthenticated = false

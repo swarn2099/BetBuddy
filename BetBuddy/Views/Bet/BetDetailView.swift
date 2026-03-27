@@ -405,6 +405,7 @@ struct PlaceBetSheet: View {
                                 await betVM.placeWager()
                                 if betVM.errorMessage == nil {
                                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                    await authVM.refreshProfile()
                                     dismiss()
                                 }
                             }

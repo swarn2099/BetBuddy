@@ -128,6 +128,9 @@ struct ProfileView: View {
             .background(Color.bgPrimary)
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                await authVM.refreshProfile()
+            }
             .alert("Sign Out", isPresented: $showSignOutAlert) {
                 Button("Sign Out", role: .destructive) {
                     Task { await authVM.signOut() }
