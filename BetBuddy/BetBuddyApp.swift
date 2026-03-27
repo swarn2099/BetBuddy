@@ -67,7 +67,9 @@ struct MainTabView: View {
         .tint(Color.accentPrimary)
         .onChange(of: selectedTab) { _, newValue in
             if newValue == 1 {
-                showCreateBet = true
+                if !groupVM.groups.isEmpty {
+                    showCreateBet = true
+                }
                 selectedTab = 0
             }
         }
