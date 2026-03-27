@@ -24,13 +24,14 @@ final class BetService {
             .value
     }
 
-    func createBet(groupId: UUID, creatorId: UUID, title: String, emoji: String, outcomes: [String], deadline: Date?) async throws -> Bet {
+    func createBet(groupId: UUID, creatorId: UUID, title: String, emoji: String, outcomes: [String], deadline: Date?, creatorCanBet: Bool = true) async throws -> Bet {
         var params: [String: AnyJSON] = [
             "group_id": .string(groupId.uuidString),
             "creator_id": .string(creatorId.uuidString),
             "title": .string(title),
             "emoji": .string(emoji),
-            "outcomes": .array(outcomes.map { .string($0) })
+            "outcomes": .array(outcomes.map { .string($0) }),
+            "creator_can_bet": .bool(creatorCanBet)
         ]
         if let deadline {
             params["deadline"] = .string(ISO8601DateFormatter().string(from: deadline))

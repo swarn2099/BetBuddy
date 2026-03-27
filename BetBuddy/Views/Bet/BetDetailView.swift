@@ -48,8 +48,8 @@ struct BetDetailView: View {
                     }
                     .frame(maxWidth: .infinity)
 
-                    // CTA button if active
-                    if bet.isActive && !bet.isPastDeadline {
+                    // CTA button if active and user can bet
+                    if bet.isActive && !bet.isPastDeadline && !userAlreadyBet && !creatorBlocked {
                         Button {
                             withAnimation {
                                 scrollProxy.scrollTo("placeBetSection", anchor: .top)
@@ -247,10 +247,43 @@ struct BetDetailView: View {
         .glassCard()
     }
 
+    private var userAlreadyBet: Bool {
+        guard let userId = authVM.currentUser?.id else { return false }
+        return betVM.wagers.contains { $0.userId == userId }
+    }
+
+    private var creatorBlocked: Bool {
+        guard let bet = betVM.bet, let userId = authVM.currentUser?.id else { return false }
+        return bet.creatorId == userId && !bet.creatorCanBet
+    }
+
     // MARK: - Action section (big bold bet buttons)
     @ViewBuilder
     private func actionSection(bet: Bet) -> some View {
-        if !bet.isPastDeadline {
+        if userAlreadyBet {
+            HStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(Color.accentSuccess)
+                Text("You already placed your bet")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(Color.textSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(16)
+            .glassCard()
+        } else if creatorBlocked {
+            HStack {
+                Image(systemName: "hand.raised.fill")
+                    .font(.system(size: 18))
+                Text("Creator betting is disabled for this bet")
+                    .font(.system(size: 15, weight: .semibold))
+            }
+            .foregroundStyle(Color.textSecondary)
+            .frame(maxWidth: .infinity)
+            .padding(16)
+            .glassCard()
+        } else if !bet.isPastDeadline {
             VStack(alignment: .leading, spacing: 16) {
                 Text("PLACE YOUR BET")
                     .font(.system(size: 13, weight: .heavy))

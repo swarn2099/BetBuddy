@@ -159,6 +159,22 @@ struct CreateBetView: View {
                         }
                     }
 
+                    // Creator betting toggle
+                    VStack(alignment: .leading, spacing: 6) {
+                        Toggle(isOn: $vm.creatorCanBet) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("CREATOR CAN BET")
+                                    .font(.label11)
+                                    .foregroundStyle(Color.textLabel)
+                                    .tracking(0.5)
+                                Text("Turn off to prevent insider trading")
+                                    .font(.cardMeta)
+                                    .foregroundStyle(Color.textMuted)
+                            }
+                        }
+                        .tint(Color.accentPrimary)
+                    }
+
                     // Deadline
                     VStack(alignment: .leading, spacing: 6) {
                         Toggle(isOn: $vm.hasDeadline) {

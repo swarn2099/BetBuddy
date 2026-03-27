@@ -6,6 +6,7 @@ final class CreateBetViewModel {
     var emoji = "🎲"
     var title = ""
     var outcomes = ["", ""]
+    var creatorCanBet = true
     var hasDeadline = false
     var deadline = Date().addingTimeInterval(86400)
     var imageData: Data?
@@ -50,7 +51,8 @@ final class CreateBetViewModel {
                 title: title.trimmingCharacters(in: .whitespaces),
                 emoji: emoji,
                 outcomes: validOutcomes,
-                deadline: hasDeadline ? deadline : nil
+                deadline: hasDeadline ? deadline : nil,
+                creatorCanBet: creatorCanBet
             )
             if let imgData = imageData {
                 _ = try? await betService.uploadBetImage(betId: bet.id, imageData: imgData)
