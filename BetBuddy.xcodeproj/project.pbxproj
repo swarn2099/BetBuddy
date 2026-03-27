@@ -64,7 +64,7 @@
 /* Begin PBXFileReference section */
 		0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		01BD4CBF2A03B6098B82B713 /* LeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewModel.swift; sourceTree = "<group>"; };
-		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		155B541DD9D67BD71910DA4B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		16890542E7021BA9783C7420 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		168E702D069D1603CC76E71F /* BetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetService.swift; sourceTree = "<group>"; };
@@ -341,8 +341,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1500;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 76E08A9B30FC95851D7F431A /* Build configuration list for PBXProject "BetBuddy" */;
 			developmentRegion = en;
@@ -445,6 +443,7 @@
 				CODE_SIGN_ENTITLEMENTS = BetBuddy/BetBuddy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_TEAM = 5R9W2MVQ3P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BetBuddy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -527,6 +526,7 @@
 				CODE_SIGN_ENTITLEMENTS = BetBuddy/BetBuddy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_TEAM = 5R9W2MVQ3P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BetBuddy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
