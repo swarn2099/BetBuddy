@@ -138,7 +138,7 @@ struct HomeView: View {
                         NavigationLink(value: bet) {
                             BetCardView(bet: bet)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.scale)
                     }
                 }
             }

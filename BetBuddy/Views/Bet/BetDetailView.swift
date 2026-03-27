@@ -250,7 +250,12 @@ struct BetDetailView: View {
                     }
 
                     Button {
-                        Task { await betVM.placeWager() }
+                        Task {
+                            await betVM.placeWager()
+                            if betVM.errorMessage == nil {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            }
+                        }
                     } label: {
                         Group {
                             if betVM.isPlacingWager {

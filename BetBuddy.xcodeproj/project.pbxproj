@@ -28,6 +28,7 @@
 		5456140447670FD02D92AEA3 /* JoinGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75861D6E828757AD03E9A99D /* JoinGroupView.swift */; };
 		649BD1E12DE46AA60816742A /* View+GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860638D85FD841B85DEE8418 /* View+GlassCard.swift */; };
 		67A487B3A85FBEB7C464A130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */; };
+		67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */; };
 		6B6D09C28DAB70E7B5E2FADE /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24BBA1F8713E59F7E8566BA /* CreateGroupView.swift */; };
 		6F159F895E6A45408BF657C5 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16890542E7021BA9783C7420 /* ProfileView.swift */; };
 		6F7A0DFF0607677F37606D92 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1A13A5113BF6930B72D9AA /* AuthService.swift */; };
@@ -97,6 +98,7 @@
 		C2CCB5859BDD3097FFCBC427 /* StatusPillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPillView.swift; sourceTree = "<group>"; };
 		C36B5A3FA3BE1AF511E88EF1 /* GroupSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsView.swift; sourceTree = "<group>"; };
 		C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+Scale.swift"; sourceTree = "<group>"; };
 		CE27BA17010077630D9A9DBB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		D0B68F201D96593514A3CB84 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D24BBA1F8713E59F7E8566BA /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 		EC50EA0A3DFFB81FB342BBFB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */,
 				9BFD4526E71EE443458FBD48 /* Color+Hex.swift */,
 				DAD3AFB987D8BEF4E50CF34B /* Date+Formatting.swift */,
 				860638D85FD841B85DEE8418 /* View+GlassCard.swift */,
@@ -387,6 +390,7 @@
 				C621A53F35AF1FC50913EFC9 /* BetDetailView.swift in Sources */,
 				DAC88C35EA9C1A79B8B1553F /* BetService.swift in Sources */,
 				4E7D66FFBAC1D2814C8CC7A9 /* BetViewModel.swift in Sources */,
+				67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */,
 				14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */,
 				A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */,
 				4A7C186859D95ABB1758D1CC /* CreateBetView.swift in Sources */,
