@@ -37,7 +37,7 @@ struct BetDetailView: View {
         ScrollView {
             if let bet = betVM.bet {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
-                    // Header — Apple Music style (full width, edge to edge)
+                    // Header — Apple Music style (full bleed behind nav bar)
                     if let url = bet.imageUrl, let imageURL = URL(string: url) {
                         ZStack(alignment: .bottomLeading) {
                             AsyncImage(url: imageURL) { image in
@@ -46,17 +46,15 @@ struct BetDetailView: View {
                                 Color.bgSurface
                             }
                             .frame(maxWidth: .infinity)
-                            .frame(height: 380)
+                            .frame(height: 420)
                             .clipped()
 
-                            // Gradient fade at bottom
                             LinearGradient(
                                 colors: [.clear, .clear, .black.opacity(0.7), .black.opacity(0.9)],
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
 
-                            // Text overlay at bottom
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack(spacing: 8) {
                                     Text(bet.emoji)
@@ -76,9 +74,8 @@ struct BetDetailView: View {
                             .padding(20)
                         }
                         .frame(maxWidth: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 0))
                         .padding(.horizontal, -Spacing.screenH)
-                        .padding(.top, -Spacing.topPadding)
+                        .ignoresSafeArea(edges: .top)
                     } else {
                         VStack(spacing: 12) {
                             Text(bet.emoji)
@@ -209,6 +206,7 @@ struct BetDetailView: View {
         }
         .background(Color.bgPrimary)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(isPresented: $showPlaceBetSheet) {
             if let bet = betVM.bet {
                 PlaceBetSheet(bet: bet, betVM: betVM, authVM: authVM, onSuccess: { side, amount in
