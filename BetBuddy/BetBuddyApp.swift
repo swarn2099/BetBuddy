@@ -12,7 +12,7 @@ struct BetBuddyApp: App {
         WindowGroup {
             Group {
                 if authVM.isLoading {
-                    LoadingView(message: "Loading...")
+                    SplashView()
                 } else if !authVM.isAuthenticated {
                     NavigationStack {
                         MagicLinkView()

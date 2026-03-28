@@ -19,6 +19,7 @@
 		28637C2FBA082211023C48AA /* EmptyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */; };
 		2BA047B1633E83F5DFD92DD9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F505E308B8495C01BB9618 /* HomeViewModel.swift */; };
 		2DB7BB6C6F00CE7CBB675DFB /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57DD196BB259A05840194A /* EditProfileView.swift */; };
+		40B442173BB29610B570628F /* FloatingEmojisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883763B5994CCFBDFAB0B927 /* FloatingEmojisView.swift */; };
 		48BCA57A1D32B3BF815F4BA2 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD151285629EE70A73DD0A40 /* Config.plist */; };
 		4A7C186859D95ABB1758D1CC /* CreateBetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265B027ED2A9A022FA434335 /* CreateBetView.swift */; };
 		4E58F34BFD1B2D8D1035ED03 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B68F201D96593514A3CB84 /* HomeView.swift */; };
@@ -42,6 +43,7 @@
 		8FEFAB6F3E98397CD9FA48F4 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */; };
 		90B38A2578532B1EEF34E4E7 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E23723ECBF777915A0F0905 /* BalanceView.swift */; };
 		9F7F53295FC3844FE062D083 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71F02A4E80159F970D12BA /* GlassCard.swift */; };
+		A35FD31165097B9D4D7DAC3A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490B97386C586689FAD8545E /* SplashView.swift */; };
 		A52AA2032E484B1D418563E1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCB92EC1AA97DD1A67B1E0B /* AuthViewModel.swift */; };
 		A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCA89B33E63848442DC55B /* ColorTokens.swift */; };
 		AE461DBC2F29FCF6AE467FDE /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */; };
@@ -65,7 +67,7 @@
 /* Begin PBXFileReference section */
 		0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		01BD4CBF2A03B6098B82B713 /* LeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewModel.swift; sourceTree = "<group>"; };
-		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		155B541DD9D67BD71910DA4B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		16890542E7021BA9783C7420 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		168E702D069D1603CC76E71F /* BetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetService.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		3D57DD196BB259A05840194A /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		40D8291D5BEB82D43C8FA0D7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		42424D0AABFC4C60E36B8864 /* BetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailView.swift; sourceTree = "<group>"; };
+		490B97386C586689FAD8545E /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4C366204711DBC55D3966AB4 /* BetBuddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetBuddy.entitlements; sourceTree = "<group>"; };
 		50A4791174DC14E0A3F6FFC8 /* GroupSelectorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSelectorSheet.swift; sourceTree = "<group>"; };
 		5CB2371F5DCDA668DEB72588 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 		83134873542DC8D2304356BF /* MagicLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkView.swift; sourceTree = "<group>"; };
 		860638D85FD841B85DEE8418 /* View+GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GlassCard.swift"; sourceTree = "<group>"; };
 		872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
+		883763B5994CCFBDFAB0B927 /* FloatingEmojisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEmojisView.swift; sourceTree = "<group>"; };
 		8E23723ECBF777915A0F0905 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		9BFD4526E71EE443458FBD48 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		A527905DE74665A53346BD13 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
@@ -271,9 +275,11 @@
 				5CB2371F5DCDA668DEB72588 /* AvatarView.swift */,
 				8E23723ECBF777915A0F0905 /* BalanceView.swift */,
 				7E33A70ABD817DCC895804AC /* CelebrationView.swift */,
+				883763B5994CCFBDFAB0B927 /* FloatingEmojisView.swift */,
 				FE71F02A4E80159F970D12BA /* GlassCard.swift */,
 				DA9B2D231B4C295D56A666CB /* LoadingView.swift */,
 				8218555700996271CA39AAD3 /* OutcomeChipView.swift */,
+				490B97386C586689FAD8545E /* SplashView.swift */,
 				C2CCB5859BDD3097FFCBC427 /* StatusPillView.swift */,
 			);
 			path = Shared;
@@ -344,6 +350,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 76E08A9B30FC95851D7F431A /* Build configuration list for PBXProject "BetBuddy" */;
 			developmentRegion = en;
@@ -405,6 +413,7 @@
 				6F7CFFB78B76598DE05FBC41 /* Date+Formatting.swift in Sources */,
 				2DB7BB6C6F00CE7CBB675DFB /* EditProfileView.swift in Sources */,
 				28637C2FBA082211023C48AA /* EmptyGroupView.swift in Sources */,
+				40B442173BB29610B570628F /* FloatingEmojisView.swift in Sources */,
 				9F7F53295FC3844FE062D083 /* GlassCard.swift in Sources */,
 				515C88C936A4F8761AB1D930 /* Group.swift in Sources */,
 				05EE06B257E9DE53FFDDE363 /* GroupMember.swift in Sources */,
@@ -429,6 +438,7 @@
 				13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */,
 				02B665CD45C9229E6842F850 /* RealtimeService.swift in Sources */,
 				B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */,
+				A35FD31165097B9D4D7DAC3A /* SplashView.swift in Sources */,
 				ED233D483B8A17F22A8F8A7F /* StatusPillView.swift in Sources */,
 				8FEFAB6F3E98397CD9FA48F4 /* SupabaseManager.swift in Sources */,
 				24AAA60BD9F648E7C59D2F4D /* Typography.swift in Sources */,
@@ -446,8 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BetBuddy/BetBuddy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
-				DEVELOPMENT_TEAM = 5R9W2MVQ3P;
+				CURRENT_PROJECT_VERSION = 19;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BetBuddy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -529,8 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BetBuddy/BetBuddy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
-				DEVELOPMENT_TEAM = 5R9W2MVQ3P;
+				CURRENT_PROJECT_VERSION = 19;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BetBuddy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

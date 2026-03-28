@@ -33,10 +33,15 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if groupVM.groups.isEmpty {
+                if groupVM.isLoading {
+                    SplashView()
+                } else if groupVM.groups.isEmpty {
                     emptyState
                 } else if let group = groupVM.selectedGroup {
-                    betFeed(group: group)
+                    ZStack {
+                        FloatingEmojisView()
+                        betFeed(group: group)
+                    }
                 } else {
                     LoadingView()
                 }
