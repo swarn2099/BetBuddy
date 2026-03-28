@@ -34,6 +34,13 @@ final class BetViewModel {
     }
 
     private func loadWagerProfiles() async {
+        // Load creator profile
+        if let bet, wagerProfiles[bet.creatorId] == nil {
+            if let profile = try? await profileService.fetchProfile(userId: bet.creatorId) {
+                wagerProfiles[bet.creatorId] = profile
+            }
+        }
+        // Load wager profiles
         let uniqueUserIds = Set(wagers.map(\.userId))
         for userId in uniqueUserIds where wagerProfiles[userId] == nil {
             if let profile = try? await profileService.fetchProfile(userId: userId) {

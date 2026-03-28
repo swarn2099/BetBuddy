@@ -35,35 +35,58 @@ struct BetDetailView: View {
         ScrollView {
             if let bet = betVM.bet {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
-                    // Header with optional image
-                    ZStack {
-                        if let url = bet.imageUrl, let imageURL = URL(string: url) {
+                    // Header — Apple Music style
+                    if let url = bet.imageUrl, let imageURL = URL(string: url) {
+                        ZStack(alignment: .bottomLeading) {
                             AsyncImage(url: imageURL) { image in
                                 image.resizable().scaledToFill()
                             } placeholder: {
                                 Color.bgSurface
                             }
                             .frame(maxWidth: .infinity)
-                            .frame(height: 180)
-                            .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: Spacing.cardRadius)
-                                    .fill(.black.opacity(0.4))
-                            )
-                        }
+                            .frame(height: UIScreen.main.bounds.height / 3)
+                            .clipped()
 
+                            // Blurred text area at bottom
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack(spacing: 6) {
+                                    Text(bet.emoji)
+                                        .font(.system(size: 20))
+                                    StatusPillView(status: bet.status, deadline: bet.deadline)
+                                }
+                                Text(bet.title)
+                                    .font(.system(size: 26, weight: .bold))
+                                    .foregroundStyle(.white)
+                                    .lineLimit(2)
+                                if let creator = betVM.wagerProfiles[bet.creatorId] {
+                                    Text("by \(creator.username)")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .foregroundStyle(.white.opacity(0.7))
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(20)
+                            .background(.ultraThinMaterial.opacity(0.8))
+                            .environment(\.colorScheme, .dark)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                    } else {
                         VStack(spacing: 12) {
                             Text(bet.emoji)
                                 .font(.system(size: 48))
                             Text(bet.title)
                                 .font(.heading2)
-                                .foregroundStyle(bet.imageUrl != nil ? .white : Color.textPrimary)
+                                .foregroundStyle(Color.textPrimary)
                                 .multilineTextAlignment(.center)
+                            if let creator = betVM.wagerProfiles[bet.creatorId] {
+                                Text("by \(creator.username)")
+                                    .font(.cardMeta)
+                                    .foregroundStyle(Color.textSecondary)
+                            }
                             StatusPillView(status: bet.status, deadline: bet.deadline)
                         }
-                        .padding(.vertical, bet.imageUrl != nil ? 20 : 0)
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
 
                     // Action buttons
                     HStack(spacing: 12) {

@@ -3,10 +3,12 @@ import SwiftUI
 struct BetCardView: View {
     let bet: Bet
     let participantProfiles: [Profile]
+    let creatorName: String?
 
-    init(bet: Bet, participantProfiles: [Profile] = []) {
+    init(bet: Bet, participantProfiles: [Profile] = [], creatorName: String? = nil) {
         self.bet = bet
         self.participantProfiles = participantProfiles
+        self.creatorName = creatorName
     }
 
     var body: some View {
@@ -26,10 +28,20 @@ struct BetCardView: View {
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
 
-                    if let deadline = bet.deadline {
-                        Text(deadline.betDeadlineText)
-                            .font(.cardMeta)
-                            .foregroundStyle(Color.textSecondary)
+                    HStack(spacing: 4) {
+                        if let name = creatorName {
+                            Text("by \(name)")
+                                .font(.cardMeta)
+                                .foregroundStyle(Color.textSecondary)
+                        }
+                        if let deadline = bet.deadline {
+                            Text("·")
+                                .font(.cardMeta)
+                                .foregroundStyle(Color.textMuted)
+                            Text(deadline.betDeadlineText)
+                                .font(.cardMeta)
+                                .foregroundStyle(Color.textSecondary)
+                        }
                     }
                 }
 
@@ -38,7 +50,7 @@ struct BetCardView: View {
                 StatusPillView(status: bet.status, deadline: bet.deadline)
             }
 
-            // Row 2: Outcome chips (compact, wrapping)
+            // Row 2: Outcome chips
             FlowLayout(spacing: 6) {
                 ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in
                     let chipColor = OutcomeColor.forIndex(index).color
@@ -73,7 +85,6 @@ struct BetCardView: View {
 
             // Row 3: Pool + participant avatars
             HStack(spacing: 0) {
-                // Pool amount in green
                 HStack(spacing: 4) {
                     Image(systemName: "dollarsign.circle.fill")
                         .font(.system(size: 14))
@@ -88,14 +99,11 @@ struct BetCardView: View {
 
                 Spacer()
 
-                // Stacked participant avatars
                 if !participantProfiles.isEmpty {
                     HStack(spacing: -8) {
                         ForEach(Array(participantProfiles.prefix(5).enumerated()), id: \.element.id) { index, profile in
                             AvatarView(name: profile.username, size: 24, imageURL: profile.avatarUrl)
-                                .overlay(
-                                    Circle().stroke(Color.bgCard, lineWidth: 2)
-                                )
+                                .overlay(Circle().stroke(Color.bgCard, lineWidth: 2))
                                 .zIndex(Double(5 - index))
                         }
                         if participantProfiles.count > 5 {
@@ -105,9 +113,7 @@ struct BetCardView: View {
                                 .frame(width: 24, height: 24)
                                 .background(Color.bgSurface)
                                 .clipShape(Circle())
-                                .overlay(
-                                    Circle().stroke(Color.bgCard, lineWidth: 2)
-                                )
+                                .overlay(Circle().stroke(Color.bgCard, lineWidth: 2))
                         }
                     }
                 }
@@ -123,8 +129,7 @@ struct FlowLayout: Layout {
     var spacing: CGFloat = 6
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let result = computeLayout(proposal: proposal, subviews: subviews)
-        return result.size
+        computeLayout(proposal: proposal, subviews: subviews).size
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
@@ -141,20 +146,16 @@ struct FlowLayout: Layout {
         var y: CGFloat = 0
         var rowHeight: CGFloat = 0
         var maxX: CGFloat = 0
-
         for subview in subviews {
             let size = subview.sizeThatFits(.unspecified)
             if x + size.width > maxWidth && x > 0 {
-                x = 0
-                y += rowHeight + spacing
-                rowHeight = 0
+                x = 0; y += rowHeight + spacing; rowHeight = 0
             }
             positions.append(CGPoint(x: x, y: y))
             rowHeight = max(rowHeight, size.height)
             x += size.width + spacing
             maxX = max(maxX, x)
         }
-
         return (CGSize(width: maxX, height: y + rowHeight), positions)
     }
 }

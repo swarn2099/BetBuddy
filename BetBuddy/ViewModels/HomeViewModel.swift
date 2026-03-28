@@ -4,6 +4,7 @@ import Foundation
 final class HomeViewModel {
     var bets: [Bet] = []
     var betParticipants: [UUID: [Profile]] = [:]
+    var betCreators: [UUID: Profile] = [:]
     var isLoading = false
     var errorMessage: String?
 
@@ -15,25 +16,40 @@ final class HomeViewModel {
         isLoading = true
         do {
             bets = try await betService.fetchBets(groupId: groupId)
-            await loadParticipants()
+            await loadCreatorsAndParticipants()
         } catch {
             errorMessage = error.localizedDescription
         }
         isLoading = false
     }
 
-    private func loadParticipants() async {
+    private func loadCreatorsAndParticipants() async {
         for bet in bets {
-            guard betParticipants[bet.id] == nil else { continue }
-            if let wagers = try? await betService.fetchWagers(betId: bet.id) {
-                let uniqueIds = Array(Set(wagers.map(\.userId)))
-                var profiles: [Profile] = []
-                for userId in uniqueIds {
-                    if let profile = try? await profileService.fetchProfile(userId: userId) {
-                        profiles.append(profile)
-                    }
+            // Load creator
+            if betCreators[bet.creatorId] == nil {
+                if let profile = try? await profileService.fetchProfile(userId: bet.creatorId) {
+                    betCreators[bet.creatorId] = profile
                 }
-                betParticipants[bet.id] = profiles
+            }
+            // Load participants
+            if betParticipants[bet.id] == nil {
+                if let wagers = try? await betService.fetchWagers(betId: bet.id) {
+                    let uniqueIds = Array(Set(wagers.map(\.userId)))
+                    var profiles: [Profile] = []
+                    for userId in uniqueIds {
+                        let profile: Profile?
+                        if let cached = betCreators[userId] {
+                            profile = cached
+                        } else {
+                            profile = try? await profileService.fetchProfile(userId: userId)
+                        }
+                        if let profile {
+                            profiles.append(profile)
+                            betCreators[userId] = profile
+                        }
+                    }
+                    betParticipants[bet.id] = profiles
+                }
             }
         }
     }

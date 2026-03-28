@@ -16,14 +16,14 @@ struct LeaderboardView: View {
             .padding(.top, Spacing.topPadding)
         }
         .overlay {
-            if vm.isLoading {
+            if vm.isLoading && vm.groupRankings.isEmpty {
                 LoadingView()
             }
         }
         .background(Color.bgPrimary)
         .navigationTitle("Leaderboard")
         .navigationBarTitleDisplayMode(.inline)
-        .task {
+        .task(id: groupId) {
             await vm.loadGroupRankings(groupId: groupId)
         }
     }

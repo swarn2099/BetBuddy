@@ -14,6 +14,7 @@ struct GroupSettingsView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var isSavingName = false
     @State private var isSavingImage = false
+    @State private var activeToast: ToastType?
 
     private var isLeader: Bool {
         currentUserId == group.leaderId
@@ -21,9 +22,10 @@ struct GroupSettingsView: View {
 
     var body: some View {
         List {
-            // Group image + name editing (leader only)
+            // Group header section (leader only)
             if isLeader {
                 Section {
+                    // Image picker
                     HStack {
                         Spacer()
                         PhotosPicker(selection: $selectedPhoto, matching: .images) {
@@ -31,24 +33,20 @@ struct GroupSettingsView: View {
                                 AsyncImage(url: imageURL) { image in
                                     image.resizable().scaledToFill()
                                 } placeholder: {
-                                    groupImagePlaceholder
+                                    imagePlaceholder
                                 }
                                 .frame(width: 80, height: 80)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                                .overlay(alignment: .bottomTrailing) {
-                                    editBadge
-                                }
+                                .overlay(alignment: .bottomTrailing) { editBadge }
                             } else {
-                                groupImagePlaceholder
-                                    .overlay(alignment: .bottomTrailing) {
-                                        editBadge
-                                    }
+                                imagePlaceholder
+                                    .overlay(alignment: .bottomTrailing) { editBadge }
                             }
                         }
                         Spacer()
                     }
-                    .listRowBackground(Color.clear)
 
+                    // Name field
                     HStack {
                         TextField("Group name", text: $editedName)
                             .font(.button15)
@@ -58,6 +56,7 @@ struct GroupSettingsView: View {
                                     isSavingName = true
                                     await groupVM.updateGroupName(groupId: group.id, name: editedName)
                                     isSavingName = false
+                                    activeToast = .betSettled // reuse as "success"
                                 }
                             } label: {
                                 if isSavingName {
@@ -75,7 +74,7 @@ struct GroupSettingsView: View {
                 }
             }
 
-            // Invite Code Section
+            // Invite Code
             Section {
                 VStack(spacing: 12) {
                     Text(group.inviteCode)
@@ -92,7 +91,6 @@ struct GroupSettingsView: View {
                             Label("Copy", systemImage: "doc.on.doc")
                                 .font(.cardMeta)
                         }
-
                         ShareLink(item: "Join my BetBuddy group! Code: \(group.inviteCode)") {
                             Label("Share", systemImage: "square.and.arrow.up")
                                 .font(.cardMeta)
@@ -103,7 +101,7 @@ struct GroupSettingsView: View {
                 Text("Invite Code")
             }
 
-            // Members Section
+            // Members
             Section {
                 ForEach(groupVM.members) { member in
                     HStack(spacing: 12) {
@@ -146,7 +144,6 @@ struct GroupSettingsView: View {
                         Label("Leave Group", systemImage: "rectangle.portrait.and.arrow.right")
                     }
                 }
-
                 if isLeader {
                     Button(role: .destructive) {
                         showDeleteGroupAlert = true
@@ -164,7 +161,7 @@ struct GroupSettingsView: View {
             }
             Button("Cancel", role: .cancel) {}
         } message: { member in
-            Text("Remove \(member.username) from the group? Their active wagers will be forfeited.")
+            Text("Remove \(member.username)? Their active wagers will be forfeited.")
         }
         .alert("Leave Group", isPresented: $showLeaveAlert) {
             Button("Leave", role: .destructive) {
@@ -186,7 +183,7 @@ struct GroupSettingsView: View {
             }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Permanently delete this group and all its bets? This cannot be undone.")
+            Text("Permanently delete this group and all its bets?")
         }
         .task {
             currentUserId = await groupVM.currentUserId
@@ -202,9 +199,10 @@ struct GroupSettingsView: View {
                 }
             }
         }
+        .toast($activeToast)
     }
 
-    private var groupImagePlaceholder: some View {
+    private var imagePlaceholder: some View {
         RoundedRectangle(cornerRadius: 16)
             .fill(Color.bgSurface)
             .frame(width: 80, height: 80)

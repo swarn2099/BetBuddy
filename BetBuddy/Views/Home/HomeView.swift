@@ -40,19 +40,11 @@ struct HomeView: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        HStack(spacing: 16) {
-                            NavigationLink {
-                                GroupSettingsView(group: group)
-                            } label: {
-                                Image(systemName: "gearshape")
-                                    .foregroundStyle(Color.textSecondary)
-                            }
-                            NavigationLink {
-                                LeaderboardView(groupId: group.id)
-                            } label: {
-                                Image(systemName: "trophy")
-                                    .foregroundStyle(Color.accentWarning)
-                            }
+                        NavigationLink {
+                            LeaderboardView(groupId: group.id)
+                        } label: {
+                            Image(systemName: "trophy")
+                                .foregroundStyle(Color.accentWarning)
                         }
                     }
                 }
@@ -146,7 +138,8 @@ struct HomeView: View {
                         NavigationLink(value: bet) {
                             BetCardView(
                                 bet: bet,
-                                participantProfiles: homeVM.betParticipants[bet.id] ?? []
+                                participantProfiles: homeVM.betParticipants[bet.id] ?? [],
+                                creatorName: homeVM.betCreators[bet.creatorId]?.username
                             )
                         }
                         .buttonStyle(.scale)
