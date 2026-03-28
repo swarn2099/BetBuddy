@@ -13,24 +13,43 @@ struct ProfileView: View {
                 if let user = authVM.currentUser {
                     VStack(spacing: Spacing.sectionGap) {
                         // Avatar + name
-                        VStack(spacing: 12) {
+                        VStack(spacing: 14) {
                             NavigationLink {
                                 EditProfileView()
                             } label: {
-                                AvatarView(name: user.username, size: 56, imageURL: user.avatarUrl)
+                                AvatarView(name: user.username, size: 88, imageURL: user.avatarUrl)
                                     .overlay(alignment: .bottomTrailing) {
                                         Image(systemName: "pencil.circle.fill")
-                                            .font(.system(size: 20))
+                                            .font(.system(size: 24))
                                             .foregroundStyle(Color.accentPrimary)
                                             .background(Circle().fill(Color.bgPrimary).padding(-2))
                                     }
                             }
                             Text("@\(user.username)")
-                                .font(.button15)
+                                .font(.system(size: 22, weight: .bold))
                                 .foregroundStyle(Color.textPrimary)
                             Text("\(user.firstName) \(user.lastName)")
                                 .font(.body15)
                                 .foregroundStyle(Color.textSecondary)
+
+                            // Invite friends button
+                            ShareLink(
+                                item: URL(string: "https://apps.apple.com/us/app/betbuddys/id6761233657")!,
+                                subject: Text("Join me on BetBuddys!"),
+                                message: Text("Bet on anything with friends using fake money. Download BetBuddys and join my group!")
+                            ) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .font(.system(size: 14))
+                                    Text("Invite Friends")
+                                        .font(.system(size: 15, weight: .semibold))
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.accentPrimary.opacity(0.12))
+                                .foregroundStyle(Color.accentPrimary)
+                                .clipShape(Capsule())
+                            }
                         }
                         .padding(.top, 20)
 

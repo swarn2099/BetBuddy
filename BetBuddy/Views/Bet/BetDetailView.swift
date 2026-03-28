@@ -33,49 +33,56 @@ struct BetDetailView: View {
         return bet.isActive && !bet.isPastDeadline && !userAlreadyBet && !creatorBlocked
     }
 
+    private var hasImage: Bool {
+        betVM.bet?.imageUrl != nil
+    }
+
     var body: some View {
         ScrollView {
             if let bet = betVM.bet {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
                     // Header — Apple Music style (full bleed behind nav bar)
                     if let url = bet.imageUrl, let imageURL = URL(string: url) {
-                        ZStack(alignment: .bottomLeading) {
-                            AsyncImage(url: imageURL) { image in
-                                image.resizable().scaledToFill()
-                            } placeholder: {
-                                Color.bgSurface
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 420)
-                            .clipped()
-
-                            LinearGradient(
-                                colors: [.clear, .clear, .black.opacity(0.7), .black.opacity(0.9)],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-
-                            VStack(alignment: .leading, spacing: 8) {
-                                HStack(spacing: 8) {
-                                    Text(bet.emoji)
-                                        .font(.system(size: 22))
-                                    StatusPillView(status: bet.status, deadline: bet.deadline)
+                        GeometryReader { geo in
+                            let minY = geo.frame(in: .global).minY
+                            ZStack(alignment: .bottomLeading) {
+                                AsyncImage(url: imageURL) { image in
+                                    image.resizable().scaledToFill()
+                                } placeholder: {
+                                    Color.bgSurface
                                 }
-                                Text(bet.title)
-                                    .font(.system(size: 28, weight: .bold))
-                                    .foregroundStyle(.white)
-                                    .lineLimit(3)
-                                if let creator = betVM.wagerProfiles[bet.creatorId] {
-                                    Text("by \(creator.username)")
-                                        .font(.system(size: 15, weight: .medium))
-                                        .foregroundStyle(.white.opacity(0.7))
+                                .frame(width: geo.size.width, height: max(420, 420 + minY))
+                                .clipped()
+                                .offset(y: minY > 0 ? -minY : 0)
+
+                                LinearGradient(
+                                    colors: [.clear, .clear, .black.opacity(0.7), .black.opacity(0.9)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .offset(y: minY > 0 ? -minY : 0)
+
+                                VStack(alignment: .leading, spacing: 8) {
+                                    HStack(spacing: 8) {
+                                        Text(bet.emoji)
+                                            .font(.system(size: 22))
+                                        StatusPillView(status: bet.status, deadline: bet.deadline)
+                                    }
+                                    Text(bet.title)
+                                        .font(.system(size: 28, weight: .bold))
+                                        .foregroundStyle(.white)
+                                        .lineLimit(3)
+                                    if let creator = betVM.wagerProfiles[bet.creatorId] {
+                                        Text("by \(creator.username)")
+                                            .font(.system(size: 15, weight: .medium))
+                                            .foregroundStyle(.white.opacity(0.7))
+                                    }
                                 }
+                                .padding(20)
                             }
-                            .padding(20)
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(height: 420)
                         .padding(.horizontal, -Spacing.screenH)
-                        .ignoresSafeArea(edges: .top)
                     } else {
                         VStack(spacing: 12) {
                             Text(bet.emoji)
@@ -205,6 +212,7 @@ struct BetDetailView: View {
             }
         }
         .background(Color.bgPrimary)
+        .ignoresSafeArea(edges: hasImage ? .top : [])
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(isPresented: $showPlaceBetSheet) {
