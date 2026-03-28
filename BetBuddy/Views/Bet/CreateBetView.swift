@@ -3,25 +3,38 @@ import PhotosUI
 
 struct CreateBetView: View {
     @Environment(GroupViewModel.self) private var groupVM
+    @Environment(AuthViewModel.self) private var authVM
     @Environment(\.dismiss) private var dismiss
     @State private var vm = CreateBetViewModel()
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var previewImage: Image?
     @State private var createdBetId: UUID?
 
+    // Groups the user can create bets in (hide global unless admin)
+    private var creatableGroups: [BetGroup] {
+        let userId = authVM.currentUser?.id
+        return groupVM.groups.filter { group in
+            if group.isGlobal {
+                guard let userId else { return false }
+                return group.adminIds?.contains(userId) == true || group.leaderId == userId
+            }
+            return true
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
                     // Group selector (if multiple groups)
-                    if groupVM.groups.count > 1 {
+                    if creatableGroups.count > 1 {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("GROUP")
                                 .font(.label11)
                                 .foregroundStyle(Color.textLabel)
                                 .tracking(0.5)
                             Picker("Group", selection: $vm.selectedGroupId) {
-                                ForEach(groupVM.groups) { group in
+                                ForEach(creatableGroups) { group in
                                     Text(group.name).tag(Optional(group.id))
                                 }
                             }
@@ -240,7 +253,12 @@ struct CreateBetView: View {
                 }
             }
             .onAppear {
-                vm.selectedGroupId = groupVM.selectedGroup?.id
+                // Default to current group if it's creatable, otherwise first creatable
+                if let current = groupVM.selectedGroup, creatableGroups.contains(where: { $0.id == current.id }) {
+                    vm.selectedGroupId = current.id
+                } else {
+                    vm.selectedGroupId = creatableGroups.first?.id
+                }
             }
             .navigationDestination(item: $createdBetId) { betId in
                 BetDetailView(betId: betId)

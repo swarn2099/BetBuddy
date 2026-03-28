@@ -6,6 +6,8 @@ struct BetGroup: Codable, Identifiable {
     var imageUrl: String?
     let inviteCode: String
     let leaderId: UUID
+    let isGlobal: Bool
+    var adminIds: [UUID]?
     let createdAt: Date
 
     enum CodingKeys: String, CodingKey {
@@ -13,6 +15,8 @@ struct BetGroup: Codable, Identifiable {
         case imageUrl = "image_url"
         case inviteCode = "invite_code"
         case leaderId = "leader_id"
+        case isGlobal = "is_global"
+        case adminIds = "admin_ids"
         case createdAt = "created_at"
     }
 }
