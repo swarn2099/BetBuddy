@@ -9,8 +9,8 @@ struct CreateBetView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var previewImage: Image?
     @State private var createdBetId: UUID?
+    @State private var showGroupPicker = false
 
-    // Groups the user can create bets in (hide global unless admin)
     private var creatableGroups: [BetGroup] {
         let userId = authVM.currentUser?.id
         return groupVM.groups.filter { group in
@@ -22,94 +22,53 @@ struct CreateBetView: View {
         }
     }
 
+    private var selectedGroupName: String {
+        creatableGroups.first(where: { $0.id == vm.selectedGroupId })?.name ?? "Select Group"
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
-                    // Group selector (if multiple groups)
+
+                    // 1. Group selector (home-screen style)
                     if creatableGroups.count > 1 {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("GROUP")
                                 .font(.label11)
                                 .foregroundStyle(Color.textLabel)
                                 .tracking(0.5)
-                            Picker("Group", selection: $vm.selectedGroupId) {
-                                ForEach(creatableGroups) { group in
-                                    Text(group.name).tag(Optional(group.id))
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .tint(Color.accentPrimary)
-                        }
-                    }
-
-                    // Cover image picker
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("COVER IMAGE")
-                            .font(.label11)
-                            .foregroundStyle(Color.textLabel)
-                            .tracking(0.5)
-                        PhotosPicker(selection: $selectedPhoto, matching: .images) {
-                            if let previewImage {
-                                previewImage
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 160)
-                                    .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
-                                    .overlay(alignment: .bottomTrailing) {
-                                        Image(systemName: "pencil.circle.fill")
-                                            .font(.system(size: 24))
-                                            .foregroundStyle(.white)
-                                            .padding(8)
+                            Button {
+                                showGroupPicker = true
+                            } label: {
+                                HStack(spacing: 10) {
+                                    if let group = creatableGroups.first(where: { $0.id == vm.selectedGroupId }) {
+                                        AvatarView(name: group.name, size: 32, imageURL: group.imageUrl)
+                                        Text(group.name)
+                                            .font(.button15)
+                                            .foregroundStyle(Color.textPrimary)
+                                    } else {
+                                        Text("Select Group")
+                                            .font(.button15)
+                                            .foregroundStyle(Color.textSecondary)
                                     }
-                            } else {
-                                HStack {
-                                    Image(systemName: "photo.on.rectangle.angled")
-                                        .font(.system(size: 20))
-                                    Text("Add a photo (optional)")
-                                        .font(.button15)
+                                    Spacer()
+                                    Image(systemName: "chevron.down")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(Color.textSecondary)
                                 }
-                                .foregroundStyle(Color.textSecondary)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 80)
-                                .background(Color.bgSurface)
-                                .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                                .padding(14)
+                                .background(Color.bgInput)
+                                .clipShape(RoundedRectangle(cornerRadius: Spacing.inputRadius))
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: Spacing.cardRadius)
-                                        .stroke(Color.borderPrimary, style: StrokeStyle(lineWidth: 1, dash: [6]))
+                                    RoundedRectangle(cornerRadius: Spacing.inputRadius)
+                                        .stroke(Color.borderPrimary, lineWidth: 1)
                                 )
                             }
                         }
                     }
 
-                    // Emoji picker
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("EMOJI")
-                            .font(.label11)
-                            .foregroundStyle(Color.textLabel)
-                            .tracking(0.5)
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: 8) {
-                            ForEach(CreateBetViewModel.emojiOptions, id: \.self) { emoji in
-                                Button {
-                                    vm.emoji = emoji
-                                } label: {
-                                    Text(emoji)
-                                        .font(.system(size: 28))
-                                        .frame(width: 44, height: 44)
-                                        .background(vm.emoji == emoji ? Color.accentPrimary.opacity(0.2) : Color.bgEmoji)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .overlay(
-                                            vm.emoji == emoji ?
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .stroke(Color.accentPrimary, lineWidth: 2) : nil
-                                        )
-                                }
-                            }
-                        }
-                    }
-
-                    // Title
+                    // 2. Title
                     VStack(alignment: .leading, spacing: 6) {
                         Text("WHAT'S THE BET?")
                             .font(.label11)
@@ -130,7 +89,7 @@ struct CreateBetView: View {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
 
-                    // Outcomes
+                    // 3. Outcomes
                     VStack(alignment: .leading, spacing: 6) {
                         Text("OUTCOMES")
                             .font(.label11)
@@ -173,23 +132,87 @@ struct CreateBetView: View {
                         }
                     }
 
-                    // Creator betting toggle
+                    // 4. Emoji picker
                     VStack(alignment: .leading, spacing: 6) {
-                        Toggle(isOn: $vm.creatorCanBet) {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("CREATOR CAN BET")
-                                    .font(.label11)
-                                    .foregroundStyle(Color.textLabel)
-                                    .tracking(0.5)
-                                Text("Turn off to prevent insider trading")
-                                    .font(.cardMeta)
-                                    .foregroundStyle(Color.textMuted)
+                        Text("EMOJI")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: 8) {
+                            ForEach(CreateBetViewModel.emojiOptions, id: \.self) { emoji in
+                                Button {
+                                    vm.emoji = emoji
+                                } label: {
+                                    Text(emoji)
+                                        .font(.system(size: 28))
+                                        .frame(width: 44, height: 44)
+                                        .background(vm.emoji == emoji ? Color.accentPrimary.opacity(0.2) : Color.bgEmoji)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .overlay(
+                                            vm.emoji == emoji ?
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color.accentPrimary, lineWidth: 2) : nil
+                                        )
+                                }
                             }
                         }
-                        .tint(Color.accentPrimary)
                     }
 
-                    // Deadline
+                    // 5. Cover image
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("COVER IMAGE")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+                        PhotosPicker(selection: $selectedPhoto, matching: .images) {
+                            if let previewImage {
+                                previewImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 160)
+                                    .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                                    .overlay(alignment: .bottomTrailing) {
+                                        Image(systemName: "pencil.circle.fill")
+                                            .font(.system(size: 24))
+                                            .foregroundStyle(.white)
+                                            .padding(8)
+                                    }
+                            } else {
+                                HStack {
+                                    Image(systemName: "photo.on.rectangle.angled")
+                                        .font(.system(size: 20))
+                                    Text("Add a photo (optional)")
+                                        .font(.button15)
+                                }
+                                .foregroundStyle(Color.textSecondary)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 80)
+                                .background(Color.bgSurface)
+                                .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: Spacing.cardRadius)
+                                        .stroke(Color.borderPrimary, style: StrokeStyle(lineWidth: 1, dash: [6]))
+                                )
+                            }
+                        }
+                    }
+
+                    // 6. Creator can bet toggle
+                    Toggle(isOn: $vm.creatorCanBet) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("CREATOR CAN BET")
+                                .font(.label11)
+                                .foregroundStyle(Color.textLabel)
+                                .tracking(0.5)
+                            Text("Turn off to prevent insider trading")
+                                .font(.cardMeta)
+                                .foregroundStyle(Color.textMuted)
+                        }
+                    }
+                    .tint(Color.accentPrimary)
+
+                    // 7. Deadline
                     VStack(alignment: .leading, spacing: 6) {
                         Toggle(isOn: $vm.hasDeadline) {
                             Text("SET DEADLINE")
@@ -253,7 +276,6 @@ struct CreateBetView: View {
                 }
             }
             .onAppear {
-                // Default to current group if it's creatable, otherwise first creatable
                 if let current = groupVM.selectedGroup, creatableGroups.contains(where: { $0.id == current.id }) {
                     vm.selectedGroupId = current.id
                 } else {
@@ -268,6 +290,38 @@ struct CreateBetView: View {
                                 .foregroundStyle(Color.accentPrimary)
                         }
                     }
+            }
+            .sheet(isPresented: $showGroupPicker) {
+                NavigationStack {
+                    List {
+                        ForEach(creatableGroups) { group in
+                            Button {
+                                vm.selectedGroupId = group.id
+                                showGroupPicker = false
+                            } label: {
+                                HStack(spacing: 12) {
+                                    AvatarView(name: group.name, size: 36, imageURL: group.imageUrl)
+                                    Text(group.name)
+                                        .font(.button15)
+                                        .foregroundStyle(Color.textPrimary)
+                                    Spacer()
+                                    if vm.selectedGroupId == group.id {
+                                        Image(systemName: "checkmark")
+                                            .foregroundStyle(Color.accentPrimary)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .navigationTitle("Select Group")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { showGroupPicker = false }
+                        }
+                    }
+                }
+                .presentationDetents([.medium])
             }
             .onChange(of: selectedPhoto) { _, newItem in
                 Task {

@@ -34,6 +34,12 @@ struct BetCardView: View {
                                 .font(.cardMeta)
                                 .foregroundStyle(Color.textSecondary)
                         }
+                        Text("·")
+                            .font(.cardMeta)
+                            .foregroundStyle(Color.textMuted)
+                        Text(bet.createdAt.relativeDateText)
+                            .font(.cardMeta)
+                            .foregroundStyle(Color.textSecondary)
                         if let deadline = bet.deadline {
                             Text("·")
                                 .font(.cardMeta)

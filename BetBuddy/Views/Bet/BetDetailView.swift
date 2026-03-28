@@ -4,6 +4,8 @@ struct BetDetailView: View {
     let betId: UUID
     @State private var betVM = BetViewModel()
     @Environment(AuthViewModel.self) private var authVM
+    @Environment(HomeViewModel.self) private var homeVM
+    @Environment(GroupViewModel.self) private var groupVM
     @Environment(\.dismiss) private var dismiss
     @State private var showPlaceBetSheet = false
     @State private var showManageBetSheet = false
@@ -227,8 +229,11 @@ struct BetDetailView: View {
                 Task {
                     await betVM.settleBet(winner: settleOutcome)
                     if betVM.errorMessage == nil {
-                        activeToast = .betSettled
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
+                        if let gid = groupVM.selectedGroup?.id {
+                            await homeVM.loadBets(groupId: gid)
+                        }
+                        dismiss()
                     }
                 }
             }
@@ -240,6 +245,9 @@ struct BetDetailView: View {
             Button("Delete", role: .destructive) {
                 Task {
                     if await betVM.deleteBet() {
+                        if let gid = groupVM.selectedGroup?.id {
+                            await homeVM.loadBets(groupId: gid)
+                        }
                         dismiss()
                     }
                 }

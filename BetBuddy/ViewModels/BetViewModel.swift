@@ -97,14 +97,26 @@ final class BetViewModel {
         errorMessage = nil
         do {
             try await betService.settleBet(betId: bet.id, userId: userId, winner: winner)
-            // Notify all participants
-            let participantIds = wagers.map(\.userId).filter { $0 != userId }
-            let uniqueIds = Array(Set(participantIds)).map(\.uuidString)
-            if !uniqueIds.isEmpty {
+            // Notify winners
+            let winners = wagers.filter { $0.side == winner && $0.userId != userId }
+            let winnerIds = Array(Set(winners.map { $0.userId })).map { $0.uuidString }
+            if !winnerIds.isEmpty {
                 await notificationService.sendPushNotification(
                     type: "bet_settled",
-                    userIds: uniqueIds,
-                    title: "Bet Settled!",
+                    userIds: winnerIds,
+                    title: "You Won! 🎉",
+                    body: "\"\(winner)\" won in \"\(bet.title)\"",
+                    metadata: ["bet_id": bet.id.uuidString, "winner": winner]
+                )
+            }
+            // Notify losers
+            let losers = wagers.filter { $0.side != winner && $0.userId != userId }
+            let loserIds = Array(Set(losers.map { $0.userId })).map { $0.uuidString }
+            if !loserIds.isEmpty {
+                await notificationService.sendPushNotification(
+                    type: "bet_settled",
+                    userIds: loserIds,
+                    title: "Better luck next time",
                     body: "\"\(winner)\" won in \"\(bet.title)\"",
                     metadata: ["bet_id": bet.id.uuidString, "winner": winner]
                 )
@@ -120,7 +132,18 @@ final class BetViewModel {
         guard let bet,
               let userId = await authService.currentUserId else { return false }
         do {
+            // Notify participants before deleting
+            let participantIds = Array(Set(wagers.map { $0.userId }.filter { $0 != userId })).map { $0.uuidString }
             try await betService.deleteBet(betId: bet.id, userId: userId)
+            if !participantIds.isEmpty {
+                await notificationService.sendPushNotification(
+                    type: "bet_created",
+                    userIds: participantIds,
+                    title: "Bet Deleted",
+                    body: "\"\(bet.title)\" was deleted. All wagers refunded.",
+                    metadata: ["bet_id": bet.id.uuidString]
+                )
+            }
             return true
         } catch {
             errorMessage = error.localizedDescription
