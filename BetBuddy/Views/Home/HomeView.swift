@@ -8,6 +8,27 @@ struct HomeView: View {
     @State private var showCreateGroup = false
     @State private var showJoinGroup = false
     @State private var showCreateBet = false
+    @State private var selectedFilter: BetFilter = .all
+
+    enum BetFilter: String, CaseIterable {
+        case all = "All"
+        case live = "Live"
+        case closingSoon = "Closing Soon"
+        case settled = "Settled"
+    }
+
+    private var filteredBets: [Bet] {
+        switch selectedFilter {
+        case .all: return homeVM.bets
+        case .live: return homeVM.bets.filter { $0.isActive && !$0.isPastDeadline }
+        case .closingSoon:
+            return homeVM.bets.filter {
+                guard let deadline = $0.deadline, $0.isActive else { return false }
+                return deadline > Date() && deadline.timeIntervalSinceNow < 86400
+            }
+        case .settled: return homeVM.bets.filter { $0.isSettled }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -129,12 +150,46 @@ struct HomeView: View {
     @ViewBuilder
     private func betFeed(group: BetGroup) -> some View {
         ScrollView {
-            LazyVStack(spacing: Spacing.cardGap) {
+            VStack(spacing: Spacing.cardGap) {
+                // Filter chips
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(BetFilter.allCases, id: \.self) { filter in
+                            Button {
+                                withAnimation(.spring(duration: 0.2)) {
+                                    selectedFilter = filter
+                                }
+                            } label: {
+                                Text(filter.rawValue)
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(selectedFilter == filter ? Color.accentPrimary : Color.bgSurface)
+                                    .foregroundStyle(selectedFilter == filter ? .white : Color.textSecondary)
+                                    .clipShape(Capsule())
+                                    .overlay(
+                                        selectedFilter != filter ?
+                                        Capsule().stroke(Color.borderPrimary, lineWidth: 1) : nil
+                                    )
+                            }
+                        }
+                    }
+                    .padding(.horizontal, Spacing.screenH)
+                }
+                .padding(.top, 4)
+
                 if homeVM.bets.isEmpty && !homeVM.isLoading {
                     EmptyGroupView(onCreateBet: { showCreateBet = true })
                         .padding(.top, 60)
+                } else if filteredBets.isEmpty {
+                    VStack(spacing: 8) {
+                        Text("No \(selectedFilter.rawValue.lowercased()) bets")
+                            .font(.button15)
+                            .foregroundStyle(Color.textSecondary)
+                    }
+                    .padding(.top, 60)
                 } else {
-                    ForEach(homeVM.bets) { bet in
+                    ForEach(filteredBets) { bet in
                         NavigationLink(value: bet) {
                             BetCardView(
                                 bet: bet,
@@ -144,9 +199,9 @@ struct HomeView: View {
                         }
                         .buttonStyle(.scale)
                     }
+                    .padding(.horizontal, Spacing.screenH)
                 }
             }
-            .padding(.horizontal, Spacing.screenH)
             .padding(.top, Spacing.topPadding)
         }
         .refreshable {

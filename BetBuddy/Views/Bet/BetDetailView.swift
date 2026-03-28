@@ -37,7 +37,7 @@ struct BetDetailView: View {
         ScrollView {
             if let bet = betVM.bet {
                 VStack(alignment: .leading, spacing: Spacing.sectionGap) {
-                    // Header — Apple Music style
+                    // Header — Apple Music style (full width, edge to edge)
                     if let url = bet.imageUrl, let imageURL = URL(string: url) {
                         ZStack(alignment: .bottomLeading) {
                             AsyncImage(url: imageURL) { image in
@@ -46,32 +46,39 @@ struct BetDetailView: View {
                                 Color.bgSurface
                             }
                             .frame(maxWidth: .infinity)
-                            .frame(height: UIScreen.main.bounds.height / 3)
+                            .frame(height: 380)
                             .clipped()
 
-                            // Blurred text area at bottom
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack(spacing: 6) {
+                            // Gradient fade at bottom
+                            LinearGradient(
+                                colors: [.clear, .clear, .black.opacity(0.7), .black.opacity(0.9)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+
+                            // Text overlay at bottom
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack(spacing: 8) {
                                     Text(bet.emoji)
-                                        .font(.system(size: 20))
+                                        .font(.system(size: 22))
                                     StatusPillView(status: bet.status, deadline: bet.deadline)
                                 }
                                 Text(bet.title)
-                                    .font(.system(size: 26, weight: .bold))
+                                    .font(.system(size: 28, weight: .bold))
                                     .foregroundStyle(.white)
-                                    .lineLimit(2)
+                                    .lineLimit(3)
                                 if let creator = betVM.wagerProfiles[bet.creatorId] {
                                     Text("by \(creator.username)")
-                                        .font(.system(size: 14, weight: .medium))
+                                        .font(.system(size: 15, weight: .medium))
                                         .foregroundStyle(.white.opacity(0.7))
                                 }
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(20)
-                            .background(.ultraThinMaterial.opacity(0.8))
-                            .environment(\.colorScheme, .dark)
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: Spacing.cardRadius))
+                        .frame(maxWidth: .infinity)
+                        .clipShape(RoundedRectangle(cornerRadius: 0))
+                        .padding(.horizontal, -Spacing.screenH)
+                        .padding(.top, -Spacing.topPadding)
                     } else {
                         VStack(spacing: 12) {
                             Text(bet.emoji)
