@@ -150,4 +150,29 @@ final class BetViewModel {
             return false
         }
     }
+
+    func forceSettleBet(winner: String) async {
+        guard let bet,
+              let userId = await authService.currentUserId else { return }
+        isSettling = true
+        errorMessage = nil
+        do {
+            try await betService.forceSettleBet(betId: bet.id, userId: userId, winner: winner)
+
+            let participantIds = Array(Set(wagers.map { $0.userId }.filter { $0 != userId })).map { $0.uuidString }
+            if !participantIds.isEmpty {
+                await notificationService.sendPushNotification(
+                    type: "bet_settled",
+                    userIds: participantIds,
+                    title: "Bet Force Settled",
+                    body: "\"\(winner)\" won in \"\(bet.title)\" (group settled)",
+                    metadata: ["bet_id": bet.id.uuidString, "winner": winner]
+                )
+            }
+            await loadBet(betId: bet.id)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isSettling = false
+    }
 }

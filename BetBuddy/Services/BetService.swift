@@ -97,6 +97,14 @@ final class BetService {
         ]).execute()
     }
 
+    func forceSettleBet(betId: UUID, userId: UUID, winner: String) async throws {
+        try await client.rpc("force_settle_bet", params: [
+            "p_bet_id": betId.uuidString,
+            "p_user_id": userId.uuidString,
+            "p_winner": winner
+        ]).execute()
+    }
+
     func deleteBet(betId: UUID, userId: UUID) async throws {
         try await client.rpc("delete_bet", params: [
             "p_bet_id": betId.uuidString,
