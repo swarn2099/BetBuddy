@@ -8,6 +8,7 @@ struct HomeView: View {
     @State private var showCreateGroup = false
     @State private var showJoinGroup = false
     @State private var showCreateBet = false
+    @State private var showCreateSideBet = false
     @State private var selectedFilter: BetFilter = .all
     @State private var selectedCategory: BetCategory?
 
@@ -72,11 +73,20 @@ struct HomeView: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink {
-                            LeaderboardView(groupId: group.id)
-                        } label: {
-                            Image(systemName: "trophy")
-                                .foregroundStyle(Color.accentWarning)
+                        HStack(spacing: 14) {
+                            Button {
+                                showCreateSideBet = true
+                            } label: {
+                                Image(systemName: "person.2.fill")
+                                    .foregroundStyle(Color.accentViolet)
+                                    .font(.system(size: 14))
+                            }
+                            NavigationLink {
+                                LeaderboardView(groupId: group.id)
+                            } label: {
+                                Image(systemName: "trophy")
+                                    .foregroundStyle(Color.accentWarning)
+                            }
                         }
                     }
                 }
@@ -97,8 +107,14 @@ struct HomeView: View {
             .fullScreenCover(isPresented: $showCreateBet) {
                 CreateBetView()
             }
+            .sheet(isPresented: $showCreateSideBet) {
+                CreateSideBetSheet()
+            }
             .navigationDestination(for: Bet.self) { bet in
                 BetDetailView(betId: bet.id)
+            }
+            .navigationDestination(for: SideBet.self) { sideBet in
+                SideBetDetailView(sideBetId: sideBet.id)
             }
         }
         .task {
@@ -226,6 +242,22 @@ struct HomeView: View {
                     }
                     .padding(.top, 60)
                 } else {
+                    // Side bets
+                    if !homeVM.sideBets.isEmpty && selectedFilter == .all {
+                        ForEach(homeVM.sideBets) { sb in
+                            NavigationLink(value: sb) {
+                                SideBetCardView(
+                                    sideBet: sb,
+                                    creatorProfile: homeVM.sideBetProfiles[sb.creatorId],
+                                    opponentProfile: homeVM.sideBetProfiles[sb.opponentId]
+                                )
+                            }
+                            .buttonStyle(.scale)
+                        }
+                        .padding(.horizontal, Spacing.screenH)
+                    }
+
+                    // Regular bets
                     ForEach(filteredBets) { bet in
                         NavigationLink(value: bet) {
                             BetCardView(

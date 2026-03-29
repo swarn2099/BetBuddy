@@ -33,6 +33,7 @@
 		515C88C936A4F8761AB1D930 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262980C94341EE76AE3F6C4E /* Group.swift */; };
 		5456140447670FD02D92AEA3 /* JoinGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75861D6E828757AD03E9A99D /* JoinGroupView.swift */; };
 		649BD1E12DE46AA60816742A /* View+GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860638D85FD841B85DEE8418 /* View+GlassCard.swift */; };
+		65B93FE6332C2392E4F9A585 /* SideBetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76174497D9AF6EC3D71CCA12 /* SideBetDetailView.swift */; };
 		66141AAB52A2CB0CC042EDC5 /* BalanceHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A128DBF0462AF76B9740F /* BalanceHistoryEntry.swift */; };
 		67A487B3A85FBEB7C464A130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */; };
 		67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */; };
@@ -43,15 +44,18 @@
 		7873E80DC3EE5B218AC9794C /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254F899C46C9662D3136E19B /* AppNotification.swift */; };
 		7DF9598FBBA914242AB307D3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */; };
 		7EF9C2FC057FDC811A38842C /* LeaderboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BD4CBF2A03B6098B82B713 /* LeaderboardViewModel.swift */; };
+		871506A6C725E065CFCBEA74 /* CreateSideBetSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A89C4683B6AE79F05AFE2BE /* CreateSideBetSheet.swift */; };
 		876549B91C77D843AFDE96A1 /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155B541DD9D67BD71910DA4B /* GroupViewModel.swift */; };
 		8937C7F7AD6AD6D3492F524A /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = A4DF8DEB096E1FEA251B9D6C /* Supabase */; };
 		8AB3065424E5D17713C4DDC9 /* BetBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E8BB3B6DB41E7E5AB9AA0 /* BetBuddyApp.swift */; };
 		8FEFAB6F3E98397CD9FA48F4 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */; };
 		90B38A2578532B1EEF34E4E7 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E23723ECBF777915A0F0905 /* BalanceView.swift */; };
+		9E2A75EFFA052D24031ED257 /* SideBet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80C37CA00C42CD79CAE5AA /* SideBet.swift */; };
 		9F7F53295FC3844FE062D083 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71F02A4E80159F970D12BA /* GlassCard.swift */; };
 		A35FD31165097B9D4D7DAC3A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490B97386C586689FAD8545E /* SplashView.swift */; };
 		A52AA2032E484B1D418563E1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCB92EC1AA97DD1A67B1E0B /* AuthViewModel.swift */; };
 		A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCA89B33E63848442DC55B /* ColorTokens.swift */; };
+		A7186E23EE79188743DBA1F4 /* SideBetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFE912C2CC05BC69ECE00BA /* SideBetService.swift */; };
 		AB4837390FEA7E11913BF525 /* BetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52522362F9B3AE87E45DBA62 /* BetCategory.swift */; };
 		AE461DBC2F29FCF6AE467FDE /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */; };
 		B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F502D27AC89B65707A4189 /* Spacing.swift */; };
@@ -60,8 +64,11 @@
 		C80D9C305F36AB3966D830E6 /* GroupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36B5A3FA3BE1AF511E88EF1 /* GroupSettingsView.swift */; };
 		CC1D461D253AB578C4F41C16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8291D5BEB82D43C8FA0D7 /* Profile.swift */; };
 		CC4FB3068F3125252B76137F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27BA17010077630D9A9DBB /* OnboardingView.swift */; };
+		CD06EFC8146828AC8E701102 /* SideBetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA949BA5F9F2C9972C8991C /* SideBetCardView.swift */; };
+		D1E66A244AF03A5C9F1CAC5E /* SideBetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585C00C76A390763AFE3B9E5 /* SideBetViewModel.swift */; };
 		D55E7E3A46B9E75A8B175DFC /* OutcomeChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8218555700996271CA39AAD3 /* OutcomeChipView.swift */; };
 		DAC88C35EA9C1A79B8B1553F /* BetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168E702D069D1603CC76E71F /* BetService.swift */; };
+		DC0F0CE17401A3B3A297944F /* SideBetVote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6055CD89F53FBECCFA31CB92 /* SideBetVote.swift */; };
 		DF2DC9FF0C52B7CA12BF367E /* MagicLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83134873542DC8D2304356BF /* MagicLinkView.swift */; };
 		DF5F1FD2FD2E9A31A8113856 /* GroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A527905DE74665A53346BD13 /* GroupService.swift */; };
 		E848205DA4B37536587DB16F /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2371F5DCDA668DEB72588 /* AvatarView.swift */; };
@@ -75,6 +82,7 @@
 		0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		01BD4CBF2A03B6098B82B713 /* LeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewModel.swift; sourceTree = "<group>"; };
 		04EA65C8E47119D5F9005140 /* BetBuddy.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BetBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DFE912C2CC05BC69ECE00BA /* SideBetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetService.swift; sourceTree = "<group>"; };
 		155B541DD9D67BD71910DA4B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		16890542E7021BA9783C7420 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		168E702D069D1603CC76E71F /* BetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetService.swift; sourceTree = "<group>"; };
@@ -88,16 +96,21 @@
 		375F09BFBE3C514BB96A06A0 /* BetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetViewModel.swift; sourceTree = "<group>"; };
 		398AA87FC414BFB44F8F099E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		3D57DD196BB259A05840194A /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		3DA949BA5F9F2C9972C8991C /* SideBetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetCardView.swift; sourceTree = "<group>"; };
 		40D8291D5BEB82D43C8FA0D7 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		42424D0AABFC4C60E36B8864 /* BetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetDetailView.swift; sourceTree = "<group>"; };
 		490B97386C586689FAD8545E /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4C366204711DBC55D3966AB4 /* BetBuddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetBuddy.entitlements; sourceTree = "<group>"; };
 		50A4791174DC14E0A3F6FFC8 /* GroupSelectorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSelectorSheet.swift; sourceTree = "<group>"; };
 		52522362F9B3AE87E45DBA62 /* BetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCategory.swift; sourceTree = "<group>"; };
+		585C00C76A390763AFE3B9E5 /* SideBetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetViewModel.swift; sourceTree = "<group>"; };
 		5CB2371F5DCDA668DEB72588 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		6055CD89F53FBECCFA31CB92 /* SideBetVote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetVote.swift; sourceTree = "<group>"; };
 		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		6A89C4683B6AE79F05AFE2BE /* CreateSideBetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSideBetSheet.swift; sourceTree = "<group>"; };
 		75861D6E828757AD03E9A99D /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
 		760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
+		76174497D9AF6EC3D71CCA12 /* SideBetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetDetailView.swift; sourceTree = "<group>"; };
 		7DABEAAFF8D78435D71F3BA7 /* BalanceHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceHistoryService.swift; sourceTree = "<group>"; };
 		7E33A70ABD817DCC895804AC /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		8218555700996271CA39AAD3 /* OutcomeChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeChipView.swift; sourceTree = "<group>"; };
@@ -106,6 +119,7 @@
 		872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkSentView.swift; sourceTree = "<group>"; };
 		883763B5994CCFBDFAB0B927 /* FloatingEmojisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEmojisView.swift; sourceTree = "<group>"; };
 		8E23723ECBF777915A0F0905 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		9A80C37CA00C42CD79CAE5AA /* SideBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBet.swift; sourceTree = "<group>"; };
 		9BFD4526E71EE443458FBD48 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		A527905DE74665A53346BD13 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
 		A53A3FD9D3FF5E271E554F8D /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
@@ -180,6 +194,7 @@
 				C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */,
 				398AA87FC414BFB44F8F099E /* ProfileService.swift */,
 				34BC15FE5724478F6A641349 /* RealtimeService.swift */,
+				0DFE912C2CC05BC69ECE00BA /* SideBetService.swift */,
 				ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */,
 			);
 			path = Services;
@@ -203,8 +218,19 @@
 				CF508113E8693EA805F64C92 /* Leaderboard */,
 				F136F274B240838D1C0517E6 /* Profile */,
 				EF629BFC70FB6F7364127909 /* Shared */,
+				80EE5FA1F040B4BFC9425250 /* SideBet */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		80EE5FA1F040B4BFC9425250 /* SideBet */ = {
+			isa = PBXGroup;
+			children = (
+				6A89C4683B6AE79F05AFE2BE /* CreateSideBetSheet.swift */,
+				3DA949BA5F9F2C9972C8991C /* SideBetCardView.swift */,
+				76174497D9AF6EC3D71CCA12 /* SideBetDetailView.swift */,
+			);
+			path = SideBet;
 			sourceTree = "<group>";
 		};
 		89AFD8DF861D5D6B360A2B98 = {
@@ -245,6 +271,8 @@
 				262980C94341EE76AE3F6C4E /* Group.swift */,
 				D6470CA88BA91E13450BD1D6 /* GroupMember.swift */,
 				40D8291D5BEB82D43C8FA0D7 /* Profile.swift */,
+				9A80C37CA00C42CD79CAE5AA /* SideBet.swift */,
+				6055CD89F53FBECCFA31CB92 /* SideBetVote.swift */,
 				2463BA047DB4E82ED9D7EFF8 /* Wager.swift */,
 			);
 			path = Models;
@@ -324,6 +352,7 @@
 				B6F505E308B8495C01BB9618 /* HomeViewModel.swift */,
 				01BD4CBF2A03B6098B82B713 /* LeaderboardViewModel.swift */,
 				0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */,
+				585C00C76A390763AFE3B9E5 /* SideBetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -438,6 +467,7 @@
 				4A7C186859D95ABB1758D1CC /* CreateBetView.swift in Sources */,
 				1B58D38019E7AA267372195D /* CreateBetViewModel.swift in Sources */,
 				6B6D09C28DAB70E7B5E2FADE /* CreateGroupView.swift in Sources */,
+				871506A6C725E065CFCBEA74 /* CreateSideBetSheet.swift in Sources */,
 				6F7CFFB78B76598DE05FBC41 /* Date+Formatting.swift in Sources */,
 				2DB7BB6C6F00CE7CBB675DFB /* EditProfileView.swift in Sources */,
 				28637C2FBA082211023C48AA /* EmptyGroupView.swift in Sources */,
@@ -465,6 +495,12 @@
 				6F159F895E6A45408BF657C5 /* ProfileView.swift in Sources */,
 				13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */,
 				02B665CD45C9229E6842F850 /* RealtimeService.swift in Sources */,
+				9E2A75EFFA052D24031ED257 /* SideBet.swift in Sources */,
+				CD06EFC8146828AC8E701102 /* SideBetCardView.swift in Sources */,
+				65B93FE6332C2392E4F9A585 /* SideBetDetailView.swift in Sources */,
+				A7186E23EE79188743DBA1F4 /* SideBetService.swift in Sources */,
+				D1E66A244AF03A5C9F1CAC5E /* SideBetViewModel.swift in Sources */,
+				DC0F0CE17401A3B3A297944F /* SideBetVote.swift in Sources */,
 				B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */,
 				A35FD31165097B9D4D7DAC3A /* SplashView.swift in Sources */,
 				ED233D483B8A17F22A8F8A7F /* StatusPillView.swift in Sources */,

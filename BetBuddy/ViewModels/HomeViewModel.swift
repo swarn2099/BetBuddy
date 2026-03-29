@@ -3,12 +3,15 @@ import Foundation
 @Observable
 final class HomeViewModel {
     var bets: [Bet] = []
+    var sideBets: [SideBet] = []
+    var sideBetProfiles: [UUID: Profile] = [:]
     var betParticipants: [UUID: [Profile]] = [:]
     var betCreators: [UUID: Profile] = [:]
     var isLoading = false
     var errorMessage: String?
 
     private let betService = BetService()
+    private let sideBetService = SideBetService()
     private let profileService = ProfileService()
     private let realtimeService = RealtimeService()
 
@@ -16,7 +19,9 @@ final class HomeViewModel {
         isLoading = true
         do {
             bets = try await betService.fetchBets(groupId: groupId)
+            sideBets = (try? await sideBetService.fetchSideBets(groupId: groupId)) ?? []
             await loadCreatorsAndParticipants()
+            await loadSideBetProfiles()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -49,6 +54,16 @@ final class HomeViewModel {
                         }
                     }
                     betParticipants[bet.id] = profiles
+                }
+            }
+        }
+    }
+
+    private func loadSideBetProfiles() async {
+        for sb in sideBets {
+            for userId in [sb.creatorId, sb.opponentId] where sideBetProfiles[userId] == nil {
+                if let profile = try? await profileService.fetchProfile(userId: userId) {
+                    sideBetProfiles[userId] = profile
                 }
             }
         }
