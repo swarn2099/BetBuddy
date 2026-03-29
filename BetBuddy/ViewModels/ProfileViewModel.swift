@@ -6,6 +6,8 @@ final class ProfileViewModel {
     var isLoading = false
     var errorMessage: String?
     var isSaving = false
+    var balanceHistory: [BalanceHistoryEntry] = []
+    var selectedTimeRange: BalanceGraphView.TimeRange = .all
 
     // Edit fields
     var editFirstName = ""
@@ -16,6 +18,7 @@ final class ProfileViewModel {
 
     private let profileService = ProfileService()
     private let authService = AuthService()
+    private let balanceHistoryService = BalanceHistoryService()
     private var usernameCheckTask: Task<Void, Never>?
 
     func loadProfile() async {
@@ -56,6 +59,11 @@ final class ProfileViewModel {
                 }
             }
         }
+    }
+
+    func loadBalanceHistory() async {
+        guard let userId = await authService.currentUserId else { return }
+        balanceHistory = (try? await balanceHistoryService.fetchHistory(userId: userId)) ?? []
     }
 
     func saveProfile(avatarData: Data?) async throws {

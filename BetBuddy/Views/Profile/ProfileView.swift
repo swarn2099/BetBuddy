@@ -6,6 +6,7 @@ struct ProfileView: View {
     @State private var showSignOutAlert = false
     @State private var showDeleteAccountAlert = false
     @State private var isDeletingAccount = false
+    @State private var profileVM = ProfileViewModel()
 
     var body: some View {
         NavigationStack {
@@ -64,6 +65,13 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity)
                         .padding(20)
                         .glassCard()
+                        .padding(.horizontal, Spacing.screenH)
+
+                        // Balance graph
+                        BalanceGraphView(
+                            history: profileVM.balanceHistory,
+                            selectedRange: $profileVM.selectedTimeRange
+                        )
                         .padding(.horizontal, Spacing.screenH)
 
                         // Stats grid
@@ -149,6 +157,7 @@ struct ProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 await authVM.refreshProfile()
+                await profileVM.loadBalanceHistory()
             }
             .alert("Sign Out", isPresented: $showSignOutAlert) {
                 Button("Sign Out", role: .destructive) {

@@ -135,6 +135,15 @@ struct GroupSettingsView: View {
                 Text("Members (\(groupVM.members.count))")
             }
 
+            // Bet History
+            Section {
+                NavigationLink {
+                    BetHistoryView(groupId: group.id)
+                } label: {
+                    Label("Bet History", systemImage: "clock.arrow.circlepath")
+                }
+            }
+
             // Actions
             Section {
                 if !isLeader {

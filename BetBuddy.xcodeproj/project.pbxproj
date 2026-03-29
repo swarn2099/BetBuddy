@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		015C7E41B2012B14207F27E0 /* BalanceGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58CE492B0DD047938ED3DBC /* BalanceGraphView.swift */; };
 		02B665CD45C9229E6842F850 /* RealtimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BC15FE5724478F6A641349 /* RealtimeService.swift */; };
 		05EE06B257E9DE53FFDDE363 /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6470CA88BA91E13450BD1D6 /* GroupMember.swift */; };
 		06CC186D17A177CAF05195F4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B2D231B4C295D56A666CB /* LoadingView.swift */; };
 		079D26C9D2CD394433071501 /* BetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329E016E6319C8DBC8A575 /* BetTemplate.swift */; };
+		0E3C9047F36CABBD8798CDB9 /* BalanceHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DABEAAFF8D78435D71F3BA7 /* BalanceHistoryService.swift */; };
 		0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A3FD9D3FF5E271E554F8D /* Bet.swift */; };
 		13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */; };
 		14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFD4526E71EE443458FBD48 /* Color+Hex.swift */; };
@@ -20,6 +22,8 @@
 		28637C2FBA082211023C48AA /* EmptyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */; };
 		2BA047B1633E83F5DFD92DD9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F505E308B8495C01BB9618 /* HomeViewModel.swift */; };
 		2DB7BB6C6F00CE7CBB675DFB /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57DD196BB259A05840194A /* EditProfileView.swift */; };
+		3054F3EEAB6A962633D901E1 /* BetHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC357326159C3F05967DD057 /* BetHistoryViewModel.swift */; };
+		3F0BED77DCED983274DE7212 /* BetHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0965A3333B20E225ABA23 /* BetHistoryView.swift */; };
 		40B442173BB29610B570628F /* FloatingEmojisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883763B5994CCFBDFAB0B927 /* FloatingEmojisView.swift */; };
 		48BCA57A1D32B3BF815F4BA2 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD151285629EE70A73DD0A40 /* Config.plist */; };
 		4A7C186859D95ABB1758D1CC /* CreateBetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265B027ED2A9A022FA434335 /* CreateBetView.swift */; };
@@ -29,6 +33,7 @@
 		515C88C936A4F8761AB1D930 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262980C94341EE76AE3F6C4E /* Group.swift */; };
 		5456140447670FD02D92AEA3 /* JoinGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75861D6E828757AD03E9A99D /* JoinGroupView.swift */; };
 		649BD1E12DE46AA60816742A /* View+GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860638D85FD841B85DEE8418 /* View+GlassCard.swift */; };
+		66141AAB52A2CB0CC042EDC5 /* BalanceHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A128DBF0462AF76B9740F /* BalanceHistoryEntry.swift */; };
 		67A487B3A85FBEB7C464A130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */; };
 		67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */; };
 		6B6D09C28DAB70E7B5E2FADE /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24BBA1F8713E59F7E8566BA /* CreateGroupView.swift */; };
@@ -78,6 +83,7 @@
 		254F899C46C9662D3136E19B /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		262980C94341EE76AE3F6C4E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		265B027ED2A9A022FA434335 /* CreateBetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBetView.swift; sourceTree = "<group>"; };
+		30E0965A3333B20E225ABA23 /* BetHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetHistoryView.swift; sourceTree = "<group>"; };
 		34BC15FE5724478F6A641349 /* RealtimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeService.swift; sourceTree = "<group>"; };
 		375F09BFBE3C514BB96A06A0 /* BetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetViewModel.swift; sourceTree = "<group>"; };
 		398AA87FC414BFB44F8F099E /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
@@ -92,6 +98,7 @@
 		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		75861D6E828757AD03E9A99D /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
 		760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
+		7DABEAAFF8D78435D71F3BA7 /* BalanceHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceHistoryService.swift; sourceTree = "<group>"; };
 		7E33A70ABD817DCC895804AC /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		8218555700996271CA39AAD3 /* OutcomeChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeChipView.swift; sourceTree = "<group>"; };
 		83134873542DC8D2304356BF /* MagicLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkView.swift; sourceTree = "<group>"; };
@@ -111,13 +118,16 @@
 		C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		CB9036B3022C6DC881EF6BB8 /* ButtonStyle+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyle+Scale.swift"; sourceTree = "<group>"; };
 		CE27BA17010077630D9A9DBB /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		CE8A128DBF0462AF76B9740F /* BalanceHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceHistoryEntry.swift; sourceTree = "<group>"; };
 		D0B68F201D96593514A3CB84 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D24BBA1F8713E59F7E8566BA /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		D6470CA88BA91E13450BD1D6 /* GroupMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
 		DA9B2D231B4C295D56A666CB /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DAD3AFB987D8BEF4E50CF34B /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		DC357326159C3F05967DD057 /* BetHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetHistoryViewModel.swift; sourceTree = "<group>"; };
 		DF1A13A5113BF6930B72D9AA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		E2DE920B1F7B60D5AF31FACA /* BetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCardView.swift; sourceTree = "<group>"; };
+		E58CE492B0DD047938ED3DBC /* BalanceGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceGraphView.swift; sourceTree = "<group>"; };
 		ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
 		EE6F172D987A087EFB978C15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F4F502D27AC89B65707A4189 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
@@ -164,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				DF1A13A5113BF6930B72D9AA /* AuthService.swift */,
+				7DABEAAFF8D78435D71F3BA7 /* BalanceHistoryService.swift */,
 				168E702D069D1603CC76E71F /* BetService.swift */,
 				A527905DE74665A53346BD13 /* GroupService.swift */,
 				C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */,
@@ -227,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				254F899C46C9662D3136E19B /* AppNotification.swift */,
+				CE8A128DBF0462AF76B9740F /* BalanceHistoryEntry.swift */,
 				A53A3FD9D3FF5E271E554F8D /* Bet.swift */,
 				52522362F9B3AE87E45DBA62 /* BetCategory.swift */,
 				21329E016E6319C8DBC8A575 /* BetTemplate.swift */,
@@ -294,6 +306,7 @@
 		F136F274B240838D1C0517E6 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				E58CE492B0DD047938ED3DBC /* BalanceGraphView.swift */,
 				3D57DD196BB259A05840194A /* EditProfileView.swift */,
 				16890542E7021BA9783C7420 /* ProfileView.swift */,
 			);
@@ -304,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				FCCB92EC1AA97DD1A67B1E0B /* AuthViewModel.swift */,
+				DC357326159C3F05967DD057 /* BetHistoryViewModel.swift */,
 				375F09BFBE3C514BB96A06A0 /* BetViewModel.swift */,
 				B2D31953318C37E3DBACE104 /* CreateBetViewModel.swift */,
 				155B541DD9D67BD71910DA4B /* GroupViewModel.swift */,
@@ -318,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				E2DE920B1F7B60D5AF31FACA /* BetCardView.swift */,
+				30E0965A3333B20E225ABA23 /* BetHistoryView.swift */,
 				760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */,
 				50A4791174DC14E0A3F6FFC8 /* GroupSelectorSheet.swift */,
 				D0B68F201D96593514A3CB84 /* HomeView.swift */,
@@ -402,12 +417,17 @@
 				6F7A0DFF0607677F37606D92 /* AuthService.swift in Sources */,
 				A52AA2032E484B1D418563E1 /* AuthViewModel.swift in Sources */,
 				E848205DA4B37536587DB16F /* AvatarView.swift in Sources */,
+				015C7E41B2012B14207F27E0 /* BalanceGraphView.swift in Sources */,
+				66141AAB52A2CB0CC042EDC5 /* BalanceHistoryEntry.swift in Sources */,
+				0E3C9047F36CABBD8798CDB9 /* BalanceHistoryService.swift in Sources */,
 				90B38A2578532B1EEF34E4E7 /* BalanceView.swift in Sources */,
 				0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */,
 				8AB3065424E5D17713C4DDC9 /* BetBuddyApp.swift in Sources */,
 				4EA007F93203EC2FF33B4EF6 /* BetCardView.swift in Sources */,
 				AB4837390FEA7E11913BF525 /* BetCategory.swift in Sources */,
 				C621A53F35AF1FC50913EFC9 /* BetDetailView.swift in Sources */,
+				3F0BED77DCED983274DE7212 /* BetHistoryView.swift in Sources */,
+				3054F3EEAB6A962633D901E1 /* BetHistoryViewModel.swift in Sources */,
 				DAC88C35EA9C1A79B8B1553F /* BetService.swift in Sources */,
 				079D26C9D2CD394433071501 /* BetTemplate.swift in Sources */,
 				4E7D66FFBAC1D2814C8CC7A9 /* BetViewModel.swift in Sources */,
