@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Group — BetBuddys</title>
+    <meta property="og:title" content="Join my group on BetBuddys!">
+    <meta property="og:description" content="Bet on anything with friends using fake money. $1,000 starting balance.">
+    <meta property="og:type" content="website">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: #06060A; color: #FAFAFA; display: flex; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; }
+        .container { max-width: 400px; }
+        .emoji { font-size: 64px; margin-bottom: 20px; }
+        h1 { font-size: 28px; margin-bottom: 8px; }
+        p { color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #6366F1, #8B5CF6); color: white; padding: 14px 32px; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 16px; }
+        .code { font-size: 32px; font-weight: 800; letter-spacing: 4px; color: #6366F1; font-family: monospace; margin-bottom: 24px; }
+    </style>
+    <script>
+        // Try to open the app, fall back to App Store
+        const code = window.location.pathname.split('/').pop();
+        if (code && /^[A-Z0-9]{6}$/i.test(code)) {
+            window.location.href = 'betbuddy://join/' + code;
+            setTimeout(() => {
+                window.location.href = 'https://apps.apple.com/us/app/betbuddys/id6761233657';
+            }, 1500);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🎲</div>
+        <h1>Join a BetBuddys Group</h1>
+        <p>Open the app to join with this invite code</p>
+        <div class="code" id="code"></div>
+        <a href="https://apps.apple.com/us/app/betbuddys/id6761233657" class="btn">Get BetBuddys</a>
+    </div>
+    <script>
+        const c = window.location.pathname.split('/').pop();
+        if (c) document.getElementById('code').textContent = c.toUpperCase();
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "5R9W2MVQ3P.com.betbuddys.app",
+        "paths": ["/join/*"]
+      }
+    ]
+  }
+}

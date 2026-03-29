@@ -6,6 +6,7 @@ struct JoinGroupView: View {
     @State private var code = ""
     @State private var isJoining = false
     @FocusState private var isFocused: Bool
+    var initialCode: String? = nil
 
     var body: some View {
         NavigationStack {
@@ -98,7 +99,12 @@ struct JoinGroupView: View {
                         .foregroundStyle(Color.textSecondary)
                 }
             }
-            .onAppear { isFocused = true }
+            .onAppear {
+                isFocused = true
+                if let initialCode, code.isEmpty {
+                    code = initialCode.uppercased()
+                }
+            }
         }
     }
 }

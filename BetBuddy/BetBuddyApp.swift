@@ -7,6 +7,7 @@ struct BetBuddyApp: App {
     @State private var authVM = AuthViewModel()
     @State private var groupVM = GroupViewModel()
     @State private var homeVM = HomeViewModel()
+    @State private var pendingInviteCode: String?
 
     var body: some Scene {
         WindowGroup {
@@ -29,9 +30,23 @@ struct BetBuddyApp: App {
             .environment(groupVM)
             .environment(homeVM)
             .onOpenURL { url in
-                Task {
-                    await authVM.handleDeepLink(url: url)
+                // Check for invite link: betbuddys.io/join/{code}
+                if url.host == "betbuddys.io" || url.host == "www.betbuddys.io",
+                   url.pathComponents.count >= 3,
+                   url.pathComponents[1] == "join" {
+                    pendingInviteCode = url.pathComponents[2]
+                } else {
+                    // Magic link callback
+                    Task {
+                        await authVM.handleDeepLink(url: url)
+                    }
                 }
+            }
+            .sheet(isPresented: Binding(
+                get: { pendingInviteCode != nil },
+                set: { if !$0 { pendingInviteCode = nil } }
+            )) {
+                JoinGroupView(initialCode: pendingInviteCode)
             }
             .task {
                 authVM.startAuthListener()

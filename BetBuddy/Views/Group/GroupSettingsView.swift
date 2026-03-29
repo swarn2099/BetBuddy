@@ -91,7 +91,11 @@ struct GroupSettingsView: View {
                             Label("Copy", systemImage: "doc.on.doc")
                                 .font(.cardMeta)
                         }
-                        ShareLink(item: "Join my BetBuddy group! Code: \(group.inviteCode)") {
+                        ShareLink(
+                            item: URL(string: "https://betbuddys.io/join/\(group.inviteCode)")!,
+                            subject: Text("Join \(group.name) on BetBuddys!"),
+                            message: Text("Join my group \"\(group.name)\" on BetBuddys! Tap the link or use code: \(group.inviteCode)")
+                        ) {
                             Label("Share", systemImage: "square.and.arrow.up")
                                 .font(.cardMeta)
                         }
