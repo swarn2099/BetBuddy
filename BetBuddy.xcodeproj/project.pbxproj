@@ -14,6 +14,7 @@
 		079D26C9D2CD394433071501 /* BetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329E016E6319C8DBC8A575 /* BetTemplate.swift */; };
 		0E3C9047F36CABBD8798CDB9 /* BalanceHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DABEAAFF8D78435D71F3BA7 /* BalanceHistoryService.swift */; };
 		0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A3FD9D3FF5E271E554F8D /* Bet.swift */; };
+		11C6B0A2D2466F9FD747A0C7 /* RecurringBet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1A8A1C3B2FACDECC5CAA3D /* RecurringBet.swift */; };
 		13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */; };
 		14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFD4526E71EE443458FBD48 /* Color+Hex.swift */; };
 		1A5F141BE3616ADA99E6A356 /* Wager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463BA047DB4E82ED9D7EFF8 /* Wager.swift */; };
@@ -59,6 +60,7 @@
 		AB4837390FEA7E11913BF525 /* BetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52522362F9B3AE87E45DBA62 /* BetCategory.swift */; };
 		AE461DBC2F29FCF6AE467FDE /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */; };
 		B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F502D27AC89B65707A4189 /* Spacing.swift */; };
+		B79FEE0372F500C0722C5284 /* RecurringBetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A378ECB599748F6F7511516 /* RecurringBetService.swift */; };
 		C54CD04BCE2E89C9AF0BA249 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70ABD817DCC895804AC /* CelebrationView.swift */; };
 		C621A53F35AF1FC50913EFC9 /* BetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42424D0AABFC4C60E36B8864 /* BetDetailView.swift */; };
 		C80D9C305F36AB3966D830E6 /* GroupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36B5A3FA3BE1AF511E88EF1 /* GroupSettingsView.swift */; };
@@ -107,6 +109,7 @@
 		5CB2371F5DCDA668DEB72588 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		6055CD89F53FBECCFA31CB92 /* SideBetVote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBetVote.swift; sourceTree = "<group>"; };
 		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		6A378ECB599748F6F7511516 /* RecurringBetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringBetService.swift; sourceTree = "<group>"; };
 		6A89C4683B6AE79F05AFE2BE /* CreateSideBetSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSideBetSheet.swift; sourceTree = "<group>"; };
 		75861D6E828757AD03E9A99D /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
 		760D2A413FC9AE8264092B85 /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 		8E23723ECBF777915A0F0905 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		9A80C37CA00C42CD79CAE5AA /* SideBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBet.swift; sourceTree = "<group>"; };
 		9BFD4526E71EE443458FBD48 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		9E1A8A1C3B2FACDECC5CAA3D /* RecurringBet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringBet.swift; sourceTree = "<group>"; };
 		A527905DE74665A53346BD13 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
 		A53A3FD9D3FF5E271E554F8D /* Bet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bet.swift; sourceTree = "<group>"; };
 		AAD2AEF1E78C8DA45BB0709F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 				C8C5546AEFBA0319BB5C63DF /* NotificationService.swift */,
 				398AA87FC414BFB44F8F099E /* ProfileService.swift */,
 				34BC15FE5724478F6A641349 /* RealtimeService.swift */,
+				6A378ECB599748F6F7511516 /* RecurringBetService.swift */,
 				0DFE912C2CC05BC69ECE00BA /* SideBetService.swift */,
 				ED35DC3488B18F2D816C33A1 /* SupabaseManager.swift */,
 			);
@@ -271,6 +276,7 @@
 				262980C94341EE76AE3F6C4E /* Group.swift */,
 				D6470CA88BA91E13450BD1D6 /* GroupMember.swift */,
 				40D8291D5BEB82D43C8FA0D7 /* Profile.swift */,
+				9E1A8A1C3B2FACDECC5CAA3D /* RecurringBet.swift */,
 				9A80C37CA00C42CD79CAE5AA /* SideBet.swift */,
 				6055CD89F53FBECCFA31CB92 /* SideBetVote.swift */,
 				2463BA047DB4E82ED9D7EFF8 /* Wager.swift */,
@@ -495,6 +501,8 @@
 				6F159F895E6A45408BF657C5 /* ProfileView.swift in Sources */,
 				13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */,
 				02B665CD45C9229E6842F850 /* RealtimeService.swift in Sources */,
+				11C6B0A2D2466F9FD747A0C7 /* RecurringBet.swift in Sources */,
+				B79FEE0372F500C0722C5284 /* RecurringBetService.swift in Sources */,
 				9E2A75EFFA052D24031ED257 /* SideBet.swift in Sources */,
 				CD06EFC8146828AC8E701102 /* SideBetCardView.swift in Sources */,
 				65B93FE6332C2392E4F9A585 /* SideBetDetailView.swift in Sources */,

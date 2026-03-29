@@ -299,6 +299,32 @@ struct CreateBetView: View {
                         }
                     }
 
+                    // 8. Recurring
+                    VStack(alignment: .leading, spacing: 6) {
+                        Toggle(isOn: $vm.isRecurring) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("RECURRING")
+                                    .font(.label11)
+                                    .foregroundStyle(Color.textLabel)
+                                    .tracking(0.5)
+                                Text("Auto-create after each settlement")
+                                    .font(.cardMeta)
+                                    .foregroundStyle(Color.textMuted)
+                            }
+                        }
+                        .tint(Color.accentPrimary)
+
+                        if vm.isRecurring {
+                            Picker("Frequency", selection: $vm.frequency) {
+                                Text("Daily").tag("daily")
+                                Text("Weekly").tag("weekly")
+                                Text("Biweekly").tag("biweekly")
+                                Text("Monthly").tag("monthly")
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                    }
+
                     if let error = vm.errorMessage {
                         Text(error)
                             .font(.cardMeta)

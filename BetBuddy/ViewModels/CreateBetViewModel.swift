@@ -12,11 +12,15 @@ final class CreateBetViewModel {
     var imageData: Data?
     var selectedTemplate: BetTemplate?
     var selectedCategory: BetCategory?
+    var isRecurring = false
+    var frequency = "weekly"
+    var dayOfWeek = Calendar.current.component(.weekday, from: Date()) - 1
     var isCreating = false
     var errorMessage: String?
 
     private let betService = BetService()
     private let authService = AuthService()
+    private let recurringBetService = RecurringBetService()
     private let notificationService = NotificationService()
     private let groupService = GroupService()
 
@@ -55,6 +59,17 @@ final class CreateBetViewModel {
         isCreating = true
         errorMessage = nil
         do {
+            // If recurring, create the recurring bet definition first
+            if isRecurring {
+                let _ = try await recurringBetService.createRecurringBet(
+                    groupId: groupId, creatorId: userId,
+                    title: title.trimmingCharacters(in: .whitespaces),
+                    emoji: emoji, outcomes: validOutcomes,
+                    frequency: frequency, dayOfWeek: dayOfWeek,
+                    creatorCanBet: creatorCanBet
+                )
+            }
+
             let bet = try await betService.createBet(
                 groupId: groupId,
                 creatorId: userId,
