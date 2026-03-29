@@ -56,6 +56,42 @@ struct BetCardView: View {
                 StatusPillView(status: bet.status, deadline: bet.deadline)
             }
 
+            // Category + Recurring badges
+            if bet.category != nil || bet.isRecurring {
+                HStack(spacing: 6) {
+                    if let catName = bet.category, let cat = BetCategory.allCases.first(where: { $0.rawValue == catName }) {
+                        HStack(spacing: 3) {
+                            Text(cat.icon)
+                                .font(.system(size: 10))
+                            Text(cat.rawValue)
+                                .font(.system(size: 10, weight: .semibold))
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(cat.color.opacity(0.12))
+                        .foregroundStyle(cat.color)
+                        .clipShape(Capsule())
+                    }
+                    if bet.isRecurring {
+                        HStack(spacing: 3) {
+                            Text("🔄")
+                                .font(.system(size: 10))
+                            Text("Recurring")
+                                .font(.system(size: 10, weight: .semibold))
+                            if let n = bet.instanceNumber {
+                                Text("#\(n)")
+                                    .font(.system(size: 10, weight: .bold))
+                            }
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Color.accentPrimary.opacity(0.12))
+                        .foregroundStyle(Color.accentPrimary)
+                        .clipShape(Capsule())
+                    }
+                }
+            }
+
             // Row 2: Outcome chips
             FlowLayout(spacing: 6) {
                 ForEach(Array(bet.outcomes.enumerated()), id: \.offset) { index, outcome in

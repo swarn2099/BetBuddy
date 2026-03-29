@@ -68,6 +68,41 @@ struct CreateBetView: View {
                         }
                     }
 
+                    // Quick Templates
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("QUICK BET")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(BetTemplate.allCases) { template in
+                                    Button {
+                                        withAnimation(.spring(duration: 0.2)) {
+                                            vm.applyTemplate(template)
+                                        }
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text(template.emoji)
+                                                .font(.system(size: 16))
+                                            Text(template.rawValue)
+                                                .font(.system(size: 13, weight: .semibold))
+                                        }
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(vm.selectedTemplate == template ? Color.accentPrimary : Color.bgSurface)
+                                        .foregroundStyle(vm.selectedTemplate == template ? .white : Color.textSecondary)
+                                        .clipShape(Capsule())
+                                        .overlay(
+                                            vm.selectedTemplate != template ?
+                                            Capsule().stroke(Color.borderPrimary, lineWidth: 1) : nil
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     // 2. Title
                     VStack(alignment: .leading, spacing: 6) {
                         Text("WHAT'S THE BET?")
@@ -128,6 +163,41 @@ struct CreateBetView: View {
                                 Label("Add Outcome", systemImage: "plus.circle")
                                     .font(.button15)
                                     .foregroundStyle(Color.accentPrimary)
+                            }
+                        }
+                    }
+
+                    // Category picker
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("CATEGORY")
+                            .font(.label11)
+                            .foregroundStyle(Color.textLabel)
+                            .tracking(0.5)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(BetCategory.allCases) { cat in
+                                    Button {
+                                        withAnimation(.spring(duration: 0.2)) {
+                                            vm.selectedCategory = vm.selectedCategory == cat ? nil : cat
+                                        }
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text(cat.icon)
+                                                .font(.system(size: 14))
+                                            Text(cat.rawValue)
+                                                .font(.system(size: 12, weight: .semibold))
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 7)
+                                        .background(vm.selectedCategory == cat ? cat.color.opacity(0.2) : Color.bgSurface)
+                                        .foregroundStyle(vm.selectedCategory == cat ? cat.color : Color.textSecondary)
+                                        .clipShape(Capsule())
+                                        .overlay(
+                                            vm.selectedCategory != cat ?
+                                            Capsule().stroke(Color.borderPrimary, lineWidth: 1) : nil
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

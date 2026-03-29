@@ -9,6 +9,7 @@ struct HomeView: View {
     @State private var showJoinGroup = false
     @State private var showCreateBet = false
     @State private var selectedFilter: BetFilter = .all
+    @State private var selectedCategory: BetCategory?
 
     enum BetFilter: String, CaseIterable {
         case all = "All"
@@ -18,16 +19,21 @@ struct HomeView: View {
     }
 
     private var filteredBets: [Bet] {
+        var result: [Bet]
         switch selectedFilter {
-        case .all: return homeVM.bets
-        case .live: return homeVM.bets.filter { $0.isActive && !$0.isPastDeadline }
+        case .all: result = homeVM.bets
+        case .live: result = homeVM.bets.filter { $0.isActive && !$0.isPastDeadline }
         case .closingSoon:
-            return homeVM.bets.filter {
+            result = homeVM.bets.filter {
                 guard let deadline = $0.deadline, $0.isActive else { return false }
                 return deadline > Date() && deadline.timeIntervalSinceNow < 86400
             }
-        case .settled: return homeVM.bets.filter { $0.isSettled }
+        case .settled: result = homeVM.bets.filter { $0.isSettled }
         }
+        if let cat = selectedCategory {
+            result = result.filter { $0.category == cat.rawValue }
+        }
+        return result
     }
 
     var body: some View {
@@ -182,6 +188,32 @@ struct HomeView: View {
                     .padding(.horizontal, Spacing.screenH)
                 }
                 .padding(.top, 4)
+
+                // Category filter chips
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        ForEach(BetCategory.allCases) { cat in
+                            Button {
+                                withAnimation(.spring(duration: 0.2)) {
+                                    selectedCategory = selectedCategory == cat ? nil : cat
+                                }
+                            } label: {
+                                HStack(spacing: 3) {
+                                    Text(cat.icon)
+                                        .font(.system(size: 12))
+                                    Text(cat.rawValue)
+                                        .font(.system(size: 11, weight: .semibold))
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(selectedCategory == cat ? cat.color.opacity(0.2) : Color.bgSurface)
+                                .foregroundStyle(selectedCategory == cat ? cat.color : Color.textMuted)
+                                .clipShape(Capsule())
+                            }
+                        }
+                    }
+                    .padding(.horizontal, Spacing.screenH)
+                }
 
                 if homeVM.bets.isEmpty && !homeVM.isLoading {
                     EmptyGroupView(onCreateBet: { showCreateBet = true })

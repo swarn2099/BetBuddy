@@ -10,6 +10,7 @@
 		02B665CD45C9229E6842F850 /* RealtimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BC15FE5724478F6A641349 /* RealtimeService.swift */; };
 		05EE06B257E9DE53FFDDE363 /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6470CA88BA91E13450BD1D6 /* GroupMember.swift */; };
 		06CC186D17A177CAF05195F4 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B2D231B4C295D56A666CB /* LoadingView.swift */; };
+		079D26C9D2CD394433071501 /* BetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329E016E6319C8DBC8A575 /* BetTemplate.swift */; };
 		0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53A3FD9D3FF5E271E554F8D /* Bet.swift */; };
 		13DD27FF5E3A4AC6866DB864 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0141B6ECF96BDDE33F95B31C /* ProfileViewModel.swift */; };
 		14B47C8B3125F9D12AB39CD4 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BFD4526E71EE443458FBD48 /* Color+Hex.swift */; };
@@ -46,6 +47,7 @@
 		A35FD31165097B9D4D7DAC3A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490B97386C586689FAD8545E /* SplashView.swift */; };
 		A52AA2032E484B1D418563E1 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCB92EC1AA97DD1A67B1E0B /* AuthViewModel.swift */; };
 		A6790C8D59D70EA4BFB07F00 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCA89B33E63848442DC55B /* ColorTokens.swift */; };
+		AB4837390FEA7E11913BF525 /* BetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52522362F9B3AE87E45DBA62 /* BetCategory.swift */; };
 		AE461DBC2F29FCF6AE467FDE /* MagicLinkSentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B64E9E2112AC74F1ACCB2 /* MagicLinkSentView.swift */; };
 		B17F7BA05021096F9C640AB3 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F502D27AC89B65707A4189 /* Spacing.swift */; };
 		C54CD04BCE2E89C9AF0BA249 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E33A70ABD817DCC895804AC /* CelebrationView.swift */; };
@@ -71,6 +73,7 @@
 		155B541DD9D67BD71910DA4B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		16890542E7021BA9783C7420 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		168E702D069D1603CC76E71F /* BetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetService.swift; sourceTree = "<group>"; };
+		21329E016E6319C8DBC8A575 /* BetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetTemplate.swift; sourceTree = "<group>"; };
 		2463BA047DB4E82ED9D7EFF8 /* Wager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wager.swift; sourceTree = "<group>"; };
 		254F899C46C9662D3136E19B /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		262980C94341EE76AE3F6C4E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		490B97386C586689FAD8545E /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4C366204711DBC55D3966AB4 /* BetBuddy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetBuddy.entitlements; sourceTree = "<group>"; };
 		50A4791174DC14E0A3F6FFC8 /* GroupSelectorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSelectorSheet.swift; sourceTree = "<group>"; };
+		52522362F9B3AE87E45DBA62 /* BetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCategory.swift; sourceTree = "<group>"; };
 		5CB2371F5DCDA668DEB72588 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		62A78069D2F1B0B98F72AE08 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		75861D6E828757AD03E9A99D /* JoinGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinGroupView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 			children = (
 				254F899C46C9662D3136E19B /* AppNotification.swift */,
 				A53A3FD9D3FF5E271E554F8D /* Bet.swift */,
+				52522362F9B3AE87E45DBA62 /* BetCategory.swift */,
+				21329E016E6319C8DBC8A575 /* BetTemplate.swift */,
 				262980C94341EE76AE3F6C4E /* Group.swift */,
 				D6470CA88BA91E13450BD1D6 /* GroupMember.swift */,
 				40D8291D5BEB82D43C8FA0D7 /* Profile.swift */,
@@ -400,8 +406,10 @@
 				0F1131CD1BB720B2A6EF1F49 /* Bet.swift in Sources */,
 				8AB3065424E5D17713C4DDC9 /* BetBuddyApp.swift in Sources */,
 				4EA007F93203EC2FF33B4EF6 /* BetCardView.swift in Sources */,
+				AB4837390FEA7E11913BF525 /* BetCategory.swift in Sources */,
 				C621A53F35AF1FC50913EFC9 /* BetDetailView.swift in Sources */,
 				DAC88C35EA9C1A79B8B1553F /* BetService.swift in Sources */,
+				079D26C9D2CD394433071501 /* BetTemplate.swift in Sources */,
 				4E7D66FFBAC1D2814C8CC7A9 /* BetViewModel.swift in Sources */,
 				67F084EAE7A704FD73B605D7 /* ButtonStyle+Scale.swift in Sources */,
 				C54CD04BCE2E89C9AF0BA249 /* CelebrationView.swift in Sources */,

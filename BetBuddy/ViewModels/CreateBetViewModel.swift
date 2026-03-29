@@ -10,6 +10,8 @@ final class CreateBetViewModel {
     var hasDeadline = false
     var deadline = Date().addingTimeInterval(86400)
     var imageData: Data?
+    var selectedTemplate: BetTemplate?
+    var selectedCategory: BetCategory?
     var isCreating = false
     var errorMessage: String?
 
@@ -29,6 +31,12 @@ final class CreateBetViewModel {
 
     var validOutcomes: [String] {
         outcomes.map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+    }
+
+    func applyTemplate(_ template: BetTemplate) {
+        selectedTemplate = template
+        emoji = template.emoji
+        outcomes = template.outcomes
     }
 
     func addOutcome() {
@@ -54,12 +62,13 @@ final class CreateBetViewModel {
                 emoji: emoji,
                 outcomes: validOutcomes,
                 deadline: hasDeadline ? deadline : nil,
-                creatorCanBet: creatorCanBet
+                creatorCanBet: creatorCanBet,
+                category: selectedCategory?.rawValue,
+                template: selectedTemplate?.rawValue
             )
             if let imgData = imageData {
                 _ = try? await betService.uploadBetImage(betId: bet.id, imageData: imgData)
             }
-            // Send notification to group members
             do {
                 let members = try await groupService.fetchGroupMembers(groupId: groupId)
                 let otherUserIds = members.filter { $0.id != userId }.map { $0.id.uuidString }
@@ -88,6 +97,8 @@ final class CreateBetViewModel {
         outcomes = ["", ""]
         hasDeadline = false
         deadline = Date().addingTimeInterval(86400)
+        selectedTemplate = nil
+        selectedCategory = nil
         errorMessage = nil
     }
 }
